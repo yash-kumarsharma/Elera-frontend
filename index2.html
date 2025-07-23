@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ELIRA</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {
+            background-color: #f4f7fa;
+            font-family: 'Arial', sans-serif;
+        }
+        .gradient-bg {
+            background: linear-gradient(135deg, #ff69b4 0%, #8a4fff 100%);
+        }
+    </style>
+</head>
+<body class="min-h-screen">
+    <div class="container mx-auto max-w-6xl px-4 py-6">
+        <!-- Navbar -->
+        <nav class="flex justify-between items-center mb-16">
+            <div class="text-2xl font-bold text-gray-800">ELIRA</div>
+            <div class="flex items-center space-x-6">
+                <a href="#" class="text-gray-600 hover:text-gray-800">Home</a>
+                <a href="#" class="text-gray-600 hover:text-gray-800">Courses</a>
+                <a href="#" class="text-gray-600 hover:text-gray-800">Financial Tools</a>
+                <a href="#" class="text-gray-600 hover:text-gray-800">Community</a>
+                <button id="get-started" class="bg-pink-500 text-white px-4 py-2 rounded-lg hover:bg-pink-600">
+                    Get Started
+                </button>
+            </div>
+        </nav>
+
+        <!-- Main Content -->
+        <main class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12">
+            <!-- Left Side -->
+            <div class="space-y-6">
+                <h1 class="text-5xl font-bold text-gray-900 leading-tight">
+                    Empowering Women's Financial Journey
+                </h1>
+                <p class="text-gray-600 text-lg">
+                    Breaking barriers, building wealth. Tailored financial education and tools designed specifically for women to achieve financial independence.
+                </p>
+                <div class="flex space-x-4">
+                    <button id="create-account" class="bg-pink-500 text-white px-6 py-3 rounded-lg hover:bg-pink-600">
+                        Start Your Journey
+                    </button>
+                    <a href="learnmore.html">
+                        <button id="more-details" class="text-pink-600 border border-pink-300 px-6 py-3 rounded-lg hover:bg-pink-50">
+                            Learn More
+                        </button>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Right Side -->
+            <div class="grid grid-cols-2 gap-4">
+                <!-- Investment Knowledge Card -->
+                <div class="bg-white rounded-2xl p-6 shadow-md">
+                    <div class="flex justify-between items-center mb-4">
+                        <h3 class="text-lg font-semibold text-gray-800">Investment Courses</h3>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" 
+                            class="text-purple-500" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M12 20v-6M6 20V10M18 20V4" />
+                        </svg>
+                    </div>
+                    <div class="text-3xl font-bold mb-4">10+ Courses</div>
+                    <a href="courses.html">
+                        <div class="bg-purple-100 h-24 rounded-lg flex items-center justify-center text-purple-600 cursor-pointer hover:bg-purple-200 transition duration-300">
+                            Beginner to Pro
+                        </div>
+                    </a>
+                </div>
+                
+
+                <!-- Financial Tools -->
+                <div class="space-y-4">
+                    <!-- Retirement Planning Card -->
+                    <div class="bg-white rounded-2xl p-6 shadow-md">
+                        <h3 class="text-lg font-semibold text-gray-800 mb-2">Retirement Planning</h3>
+                        <div class="flex items-center text-green-500">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" />
+                                <polyline points="22 4 12 14.01 9 11.01" />
+                            </svg>
+                            <span class="ml-2 text-gray-600">Secure Your Future</span>
+                        </div>
+                    </div>
+
+                    <!-- Performance Card -->
+                    <div class="bg-white rounded-2xl p-6 shadow-md">
+                        <div class="flex justify-between mb-2">
+                            <h3 class="text-lg font-semibold text-gray-800">Financial Literacy</h3>
+                            <span class="text-pink-500 font-medium">21%</span>
+                        </div>
+                        <div class="w-full bg-gray-200 rounded-full h-2.5">
+                            <div class="bg-pink-500 h-2.5 rounded-full" style="width: 21%"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <!-- Key Features Section -->
+        <section class="grid md:grid-cols-3 gap-6 mb-12">
+            <!-- Personalized Budgeting -->
+            <div class="bg-white rounded-2xl p-6 shadow-md">
+                <h3 class="text-xl font-semibold mb-4">Personalized Budgeting</h3>
+                <p class="text-gray-600 mb-4">Create custom budget plans tailored to your income, family needs, and financial goals.</p>
+                <a href="budget.html">
+                    <button class="text-pink-600 hover:underline">Explore Budgeting Tools</button>
+                </a>
+            </div>
+        
+            <!-- Health Insurance Comparison -->
+            <div class="bg-white rounded-2xl p-6 shadow-md">
+                <h3 class="text-xl font-semibold mb-4">Health Insurance Comparison</h3>
+                <p class="text-gray-600 mb-4">Compare and find the best health insurance plans that suit your specific needs.</p>
+                <a href="insurance.html">
+                    <button class="text-pink-600 hover:underline">Compare Plans</button>
+                </a>
+            </div>
+        
+            <!-- Investment Calculator -->
+            <div class="bg-white rounded-2xl p-6 shadow-md">
+                <h3 class="text-xl font-semibold mb-4">Investment Calculator</h3>
+                <p class="text-gray-600 mb-4">Calculate potential returns and plan your investment strategy based on your current salary.</p>
+                <a href="investment.html">
+                    <button class="text-pink-600 hover:underline">Start Calculating</button>
+                </a>
+            </div>
+        </section>
+        
+
+        <!-- Why Choose Us Section -->
+        <section class="gradient-bg text-white rounded-2xl p-12 text-center">
+            <h2 class="text-4xl font-bold mb-6">Why Women Choose ELIRA</h2>
+            <p class="text-xl mb-8">We understand the unique financial challenges women face. From longer life expectancy to wage gaps, our platform is designed to empower you financially.</p>
+            <div class="grid md:grid-cols-3 gap-6">
+                <div>
+                    <h3 class="text-2xl font-bold">90%</h3>
+                    <p>Increased Financial Confidence</p>
+                </div>
+                <div>p
+                    <h3 class="text-2xl font-bold">5+ Years</h3>
+                    <p>Average Retirement Savings Boost</p>
+                </div>
+                <div>
+                    <h3 class="text-2xl font-bold">24/7</h3>
+                    <p>Personalized Financial Guidance</p>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            var buttons = document.querySelectorAll('button');
+            
+            buttons.forEach(function(button) {
+                button.addEventListener('mouseenter', function() {
+                    this.style.transform = 'scale(1.05)';
+                });
+                
+                button.addEventListener('mouseleave', function() {
+                    this.style.transform = 'scale(1)';
+                });
+                
+                button.addEventListener('click', function() {
+                    switch(this.id) {
+                        case 'get-started':
+                            alert('Ready to start your financial journey?');
+                            break;
+                        case 'create-account':
+                            alert('Let\'s create your personalized financial profile!');
+                            break;
+                        case 'more-details':
+                            alert('Discover how we can help you achieve financial freedom!');
+                            break;
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>

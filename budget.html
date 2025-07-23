@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Personalized Budget Planner</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {
+            background-color: #f4f7fa;
+            font-family: 'Arial', sans-serif;
+        }
+        .gradient-bg {
+            background: linear-gradient(135deg, #ff69b4 0%, #8a4fff 100%);
+        }
+    </style>
+</head>
+<body class="bg-[#f4f7fa] min-h-screen flex items-center justify-center">
+    <div class="w-full max-w-md mx-auto bg-white shadow-lg rounded-xl p-6">
+        <div class="gradient-bg text-white py-4 px-6 rounded-t-xl -mx-6 -mt-6 mb-6">
+            <h1 class="text-2xl font-bold text-center">Personalized Budget Planner</h1>
+        </div>
+        
+        <form id="budget-form">
+            <div class="mb-4">
+                <label for="monthly-income" class="block text-gray-700 font-bold mb-2">
+                    Monthly Income ($)
+                </label>
+                <input 
+                    type="number" 
+                    id="monthly-income" 
+                    required 
+                    min="0" 
+                    step="0.01"
+                    class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#8a4fff]"
+                >
+            </div>
+            
+            <div class="mb-4">
+                <label for="family-size" class="block text-gray-700 font-bold mb-2">
+                    Family Size
+                </label>
+                <select 
+                    id="family-size"
+                    class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#8a4fff]"
+                >
+                    <option value="1">1 Person</option>
+                    <option value="2">2 People</option>
+                    <option value="3">3 People</option>
+                    <option value="4">4 People</option>
+                    <option value="5">5+ People</option>
+                </select>
+            </div>
+            
+            <div class="mb-6">
+                <label for="financial-goal" class="block text-gray-700 font-bold mb-2">
+                    Financial Goal
+                </label>
+                <select 
+                    id="financial-goal"
+                    class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#8a4fff]"
+                >
+                    <option value="save">Save Money</option>
+                    <option value="invest">Invest</option>
+                    <option value="debt-reduction">Debt Reduction</option>
+                    <option value="emergency-fund">Build Emergency Fund</option>
+                </select>
+            </div>
+            
+            <button 
+                type="submit" 
+                class="w-full bg-[#ff69b4] hover:bg-[#ff3a8e] text-white font-bold py-2 px-4 rounded-md transition duration-300 ease-in-out transform hover:scale-105"
+            >
+                Generate Personalized Budget
+            </button>
+        </form>
+        
+        <div 
+            id="budget-result" 
+            class="mt-6 p-4 bg-gray-100 rounded-md shadow-inner hidden"
+        >
+            <h2 class="text-xl font-bold mb-4 text-gray-800">Your Personalized Budget Breakdown</h2>
+            <div id="budget-details" class="space-y-2"></div>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('budget-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Get form values
+            const income = parseFloat(document.getElementById('monthly-income').value);
+            const familySize = parseInt(document.getElementById('family-size').value);
+            const financialGoal = document.getElementById('financial-goal').value;
+            
+            // Budget allocation logic
+            const budgetAllocation = calculateBudget(income, familySize, financialGoal);
+            
+            // Display results
+            const resultDiv = document.getElementById('budget-result');
+            const detailsDiv = document.getElementById('budget-details');
+            
+            detailsDiv.innerHTML = `
+                <p class="text-gray-700"><strong>Total Monthly Income:</strong> $${income.toFixed(2)}</p>
+                <h3 class="text-lg font-semibold mt-4 text-gray-800">Recommended Budget Breakdown:</h3>
+                <ul class="space-y-2">
+                    <li class="bg-white p-3 rounded-md shadow-sm">
+                        <span class="font-bold text-[#ff69b4]">Housing:</span> 
+                        $${budgetAllocation.housing.toFixed(2)} (${budgetAllocation.housingPercentage}%)
+                    </li>
+                    <li class="bg-white p-3 rounded-md shadow-sm">
+                        <span class="font-bold text-[#8a4fff]">Food:</span> 
+                        $${budgetAllocation.food.toFixed(2)} (${budgetAllocation.foodPercentage}%)
+                    </li>
+                    <li class="bg-white p-3 rounded-md shadow-sm">
+                        <span class="font-bold text-[#ff69b4]">Transportation:</span> 
+                        $${budgetAllocation.transportation.toFixed(2)} (${budgetAllocation.transportationPercentage}%)
+                    </li>
+                    <li class="bg-white p-3 rounded-md shadow-sm">
+                        <span class="font-bold text-[#8a4fff]">Utilities:</span> 
+                        $${budgetAllocation.utilities.toFixed(2)} (${budgetAllocation.utilitiesPercentage}%)
+                    </li>
+                    <li class="bg-white p-3 rounded-md shadow-sm">
+                        <span class="font-bold text-[#ff69b4]">Savings/Goal:</span> 
+                        $${budgetAllocation.savings.toFixed(2)} (${budgetAllocation.savingsPercentage}%)
+                    </li>
+                    <li class="bg-white p-3 rounded-md shadow-sm">
+                        <span class="font-bold text-[#8a4fff]">Miscellaneous:</span> 
+                        $${budgetAllocation.miscellaneous.toFixed(2)} (${budgetAllocation.miscellaneousPercentage}%)
+                    </li>
+                </ul>
+                <p class="mt-4 text-gray-700">
+                    <strong class="text-[#ff69b4]">Financial Goal Focus:</strong> 
+                    ${getGoalDescription(financialGoal)}
+                </p>
+            `;
+            
+            resultDiv.classList.remove('hidden');
+        });
+        
+        function calculateBudget(income, familySize, financialGoal) {
+            // Base percentages with adjustments for family size and financial goal
+            let baseAllocation = {
+                housing: 30,
+                food: 15,
+                transportation: 10,
+                utilities: 10,
+                savings: 15,
+                miscellaneous: 20
+            };
+            
+            // Adjust for family size
+            if (familySize > 2) {
+                baseAllocation.housing += 5;
+                baseAllocation.food += 3;
+                baseAllocation.miscellaneous -= 3;
+            }
+            
+            // Adjust for financial goal
+            switch(financialGoal) {
+                case 'save':
+                    baseAllocation.savings += 10;
+                    baseAllocation.miscellaneous -= 5;
+                    break;
+                case 'invest':
+                    baseAllocation.savings += 15;
+                    baseAllocation.miscellaneous -= 7;
+                    break;
+                case 'debt-reduction':
+                    baseAllocation.savings += 12;
+                    baseAllocation.miscellaneous -= 6;
+                    break;
+                case 'emergency-fund':
+                    baseAllocation.savings += 20;
+                    baseAllocation.miscellaneous -= 10;
+                    break;
+            }
+            
+            // Calculate dollar amounts
+            return {
+                housing: income * (baseAllocation.housing / 100),
+                housingPercentage: baseAllocation.housing,
+                food: income * (baseAllocation.food / 100),
+                foodPercentage: baseAllocation.food,
+                transportation: income * (baseAllocation.transportation / 100),
+                transportationPercentage: baseAllocation.transportation,
+                utilities: income * (baseAllocation.utilities / 100),
+                utilitiesPercentage: baseAllocation.utilities,
+                savings: income * (baseAllocation.savings / 100),
+                savingsPercentage: baseAllocation.savings,
+                miscellaneous: income * (baseAllocation.miscellaneous / 100),
+                miscellaneousPercentage: baseAllocation.miscellaneous
+            };
+        }
+        
+        function getGoalDescription(goal) {
+            const descriptions = {
+                'save': 'Focusing on maximizing savings and reducing unnecessary expenses.',
+                'invest': 'Prioritizing investment opportunities and long-term financial growth.',
+                'debt-reduction': 'Strategically allocating more funds to pay down existing debts.',
+                'emergency-fund': 'Building a robust financial safety net for unexpected expenses.'
+            };
+            return descriptions[goal];
+        }
+    </script>
+</body>
+</html>

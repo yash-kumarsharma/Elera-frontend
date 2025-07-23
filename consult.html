@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title> CONSULT ME</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
+</head>
+<body class="bg-gray-50" x-data="providerDirectory()">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <!-- Navbar remains the same -->
+        <nav class="flex justify-between items-center py-4">
+            <div class="text-2xl font-bold text-pink-600">consult</div>
+            <div class="space-x-4">
+                <a href="#" class="text-gray-600 hover:text-pink-600">Content</a>
+                <a href="#" class="text-gray-600 hover:text-pink-600">Community</a>
+                <a href="#" class="text-gray-600 hover:text-pink-600">Find a Provider</a>
+                <a href="#" class="text-gray-600 hover:text-pink-600">Join</a>
+                <a href="#" class="bg-pink-500 text-white px-4 py-2 rounded-md hover:bg-pink-600">Sign Up or Log In</a>
+            </div>
+        </nav>
+
+        <!-- Hero Section -->
+        <div class="relative bg-pink-50 rounded-lg overflow-hidden mb-8">
+            <div class="absolute inset-0 bg-gradient-to-r from-pink-200 to-yellow-100 opacity-50"></div>
+            <div class="relative z-10 p-8">
+                <h1 class="text-3xl font-bold text-center mb-4">WANNA CONSULT?</h1>
+                
+                <!-- Search Form -->
+                <div class="max-w-3xl mx-auto bg-white rounded-lg shadow-md">
+                    <div class="flex divide-x">
+                        <div class="flex-grow p-2">
+                            <input 
+                                type="text" 
+                                placeholder="Search by Name or Practice name" 
+                                class="w-full px-4 py-2 focus:outline-none"
+                                x-model="searchTerm"
+                            >
+                        </div>
+                        <div class="p-2">
+                            <select class="w-full px-4 py-2 focus:outline-none" x-model="selectedSpecialty">
+                                <option value="">Specialty</option>
+                                <option value="Obstetrics and Gynecology">Obstetrics and Gynecology</option>
+                                <option value="Mental Health">Mental Health</option>
+                            </select>
+                        </div>
+                        <div class="p-2">
+                            <input 
+                                type="text" 
+                                placeholder="City" 
+                                class="w-full px-4 py-2 focus:outline-none"
+                                x-model="city"
+                            >
+                        </div>
+                        <div class="p-2">
+                            <button 
+                                class="bg-pink-500 text-white px-6 py-2 rounded-md hover:bg-pink-600"
+                                @click="searchProviders"
+                            >
+                                Search
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Filters -->
+        <div class="mb-4 flex items-center space-x-4">
+            <span class="text-gray-600" x-text="${filteredProviders.length} Providers"></span>
+            <div class="flex space-x-2">
+                <template x-for="filter in activeFilters">
+                    <span 
+                        class="bg-pink-100 text-pink-600 px-3 py-1 rounded-full text-sm flex items-center space-x-2"
+                    >
+                        <span x-text="filter"></span>
+                        <button @click="removeFilter(filter)" class="ml-2">×</button>
+                    </span>
+                </template>
+            </div>
+            <button 
+                @click="clearAllFilters" 
+                class="text-pink-600 hover:underline"
+            >
+                Clear All
+            </button>
+        </div>
+
+        <!-- Provider List -->
+        <div class="space-y-4">
+            <template x-for="provider in displayedProviders">
+                <div class="bg-white rounded-lg shadow-md p-6 flex items-center justify-between hover:shadow-lg transition-shadow">
+                    <div class="flex items-center space-x-4">
+                        <img 
+                            :src="provider.image" 
+                            :alt="provider.name" 
+                            class="w-20 h-20 rounded-full object-cover border-4 border-pink-100"
+                        >
+                        <div>
+                            <h2 class="text-xl font-bold" x-text="provider.name"></h2>
+                            <div class="flex items-center space-x-2 text-gray-600">
+                                <span x-text="provider.specialty"></span>
+                                <span>•</span>
+                                <span x-text="provider.location"></span>
+                            </div>
+                            <div class="flex items-center space-x-2 mt-2">
+                                <div class="flex text-yellow-400">
+                                    <template x-for="i in 5">
+                                        <svg 
+                                            xmlns="http://www.w3.org/2000/svg" 
+                                            class="h-5 w-5" 
+                                            :class="i <= provider.rating ? 'fill-current' : 'text-gray-300'"
+                                            viewBox="0 0 24 24" 
+                                            fill="none" 
+                                            stroke="currentColor"
+                                        >
+                                            <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+                                        </svg>
+                                    </template>
+                                </div>
+                                <span x-text="${provider.rating} (${provider.reviews} Reviews)"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="flex flex-col items-end space-y-4">
+                        <span 
+                            class="bg-green-100 text-green-600 px-3 py-1 rounded-full text-sm"
+                            x-text="provider.status"
+                        ></span>
+                        <div class="flex space-x-2">
+                            <button 
+                                class="bg-pink-500 text-white px-4 py-2 rounded-md hover:bg-pink-600"
+                            >
+                                View Profile
+                            </button>
+                            <button 
+                                class="border border-pink-500 text-pink-500 px-4 py-2 rounded-md hover:bg-pink-50"
+                            >
+                                Book Appointment
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </template>
+        </div>
+
+        <!-- Show More Button -->
+        <div x-show="hasMoreProviders" class="mt-6 text-center">
+            <button 
+                @click="loadMoreProviders" 
+                class="bg-pink-500 text-white px-6 py-2 rounded-md hover:bg-pink-600"
+            >
+                Show More
+            </button>
+        </div>
+    </div>
+
+    <script>
+        function providerDirectory() {
+            return {
+                providers: [
+                    {
+                        name: 'Dr. Emma Rodriguez',
+                        specialty: 'Obstetrics and Gynecology',
+                        location: 'San Francisco, CA',
+                        rating: 4.9,
+                        reviews: 75,
+                        status: 'Accepting new patients',
+                        image: 'https://randomuser.me/api/portraits/women/67.jpg',
+                        city: 'San Francisco'
+                    },
+                    {
+                        name: 'Dr. Sophia Lee',
+                        specialty: 'Mental Health',
+                        location: 'New York, NY',
+                        rating: 4.7,
+                        reviews: 62,
+                        status: 'Accepting new patients',
+                        image: 'https://randomuser.me/api/portraits/women/85.jpg',
+                        city: 'New York'
+                    },
+                    {
+                        name: 'Dr. Olivia Chen',
+                        specialty: 'Obstetrics and Gynecology',
+                        location: 'Los Angeles, CA',
+                        rating: 4.6,
+                        reviews: 55,
+                        status: 'Limited availability',
+                        image: 'https://randomuser.me/api/portraits/women/90.jpg',
+                        city: 'Los Angeles'
+                    },
+                    {
+                        name: 'Dr. Ethan Williams',
+                        specialty: 'Mental Health',
+                        location: 'Chicago, IL',
+                        rating: 4.8,
+                        reviews: 68,
+                        status: 'Accepting new patients',
+                        image: 'https://randomuser.me/api/portraits/men/32.jpg',
+                        city: 'Chicago'
+                    },
+                    {
+                        name: 'Dr. Isabella Martinez',
+                        specialty: 'Obstetrics and Gynecology',
+                        location: 'Miami, FL',
+                        rating: 4.5,
+                        reviews: 50,
+                        status: 'Accepting new patients',
+                        image: 'https://randomuser.me/api/portraits/women/50.jpg',
+                        city: 'Miami'
+                    },
+                    {
+                        name: 'Dr. Alexander Kim',
+                        specialty: 'Mental Health',
+                        location: 'Seattle, WA',
+                        rating: 4.7,
+                        reviews: 60,
+                        status: 'Limited availability',
+                        image: 'https://randomuser.me/api/portraits/men/61.jpg',
+                        city: 'Seattle'
+                    },
+                    {
+                        name: 'Dr. Ava Johnson',
+                        specialty: 'Obstetrics and Gynecology',
+                        location: 'Boston, MA',
+                        rating: 4.6,
+                        reviews: 52,
+                        status: 'Accepting new patients',
+                        image: 'https://randomuser.me/api/portraits/women/79.jpg',
+                        city: 'Boston'
+                    },
+                    {
+                        name: 'Dr. Noah Thompson',
+                        specialty: 'Mental Health',
+                        location: 'Denver, CO',
+                        rating: 4.8,
+                        reviews: 65,
+                        status: 'Accepting new patients',
+                        image: 'https://randomuser.me/api/portraits/men/85.jpg',
+                        city: 'Denver'
+                    },
+                    {
+                        name: 'Dr. Mia Garcia',
+                        specialty: 'Obstetrics and Gynecology',
+                        location: 'Houston, TX',
+                        rating: 4.7,
+                        reviews: 58,
+                        status: 'Limited availability',
+                        image: 'https://randomuser.me/api/portraits/women/65.jpg',
+                        city: 'Houston'
+                    },
+                    {
+                        name: 'Dr. Lucas Rivera',
+                        specialty: 'Mental Health',
+                        location: 'Phoenix, AZ',
+                        rating: 4.6,
+                        reviews: 54,
+                        status: 'Accepting new patients',
+                        image: 'https://randomuser.me/api/portraits/men/50.jpg',
+                        city: 'Phoenix'
+                    }
+                ],
+                searchTerm: '',
+                selectedSpecialty: '',
+                city: '',
+                displayedProvidersCount: 10,
+                get activeFilters() {
+                    return [
+                        this.selectedSpecialty
+                    ].filter(filter => filter !== '');
+                },
+                get filteredProviders() {
+                    return this.providers.filter(provider => {
+                        const matchSearch = this.searchTerm === '' || 
+                            provider.name.toLowerCase().includes(this.searchTerm.toLowerCase());
+                        
+                        const matchSpecialty = this.selectedSpecialty === '' || 
+                            provider.specialty === this.selectedSpecialty;
+                        
+                        const matchCity = this.city === '' || 
+                            provider.city.toLowerCase().includes(this.city.toLowerCase());
+                        
+                        return matchSearch && matchSpecialty && matchCity;
+                    });
+                },
+                get displayedProviders() {
+                    return this.filteredProviders.slice(0, this.displayedProvidersCount);
+                },
+                get hasMoreProviders() {
+                    return this.filteredProviders.length > this.displayedProvidersCount;
+                },
+                searchProviders() {
+                    // Reset displayed providers count when searching
+                    this.displayedProvidersCount = 10;
+                },
+                loadMoreProviders() {
+                    // Show all providers when "Show More" is clicked
+                    this.displayedProvidersCount = this.filteredProviders.length;
+                },
+                removeFilter(filter) {
+                    if (filter === this.selectedSpecialty) this.selectedSpecialty = '';
+                },
+                clearAllFilters() {
+                    this.searchTerm = '';
+                    this.selectedSpecialty = '';
+                    this.city = '';
+                    this.displayedProvidersCount = 10;
+                }
+            }
+        }
+    </script>
+</body>
+</html>

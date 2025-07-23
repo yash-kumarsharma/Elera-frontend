@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Feedback Pop-up Example</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+    }
+    
+    .feedback-button {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      background-color: #e91e63;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      padding: 10px 15px;
+      cursor: pointer;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+      z-index: 999;
+    }
+    
+    .feedback-popup {
+      display: none;
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      width: 300px;
+      background-color: white;
+      border-radius: 8px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+      z-index: 1000;
+      overflow: hidden;
+    }
+    
+    .popup-header {
+      background-color: #e91e63;
+      color: white;
+      padding: 10px 15px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    
+    .popup-header h3 {
+      margin: 0;
+      font-size: 16px;
+    }
+    
+    .close-btn {
+      background: none;
+      border: none;
+      color: white;
+      font-size: 18px;
+      cursor: pointer;
+      padding: 0;
+    }
+    
+    .popup-content {
+      padding: 15px;
+    }
+    
+    .emoji-rating {
+      display: flex;
+      justify-content: space-between;
+      margin: 15px 0;
+    }
+    
+    .emoji-option {
+      cursor: pointer;
+      font-size: 24px;
+      opacity: 0.5;
+      transition: opacity 0.3s, transform 0.3s;
+    }
+    
+    .emoji-option:hover, .emoji-option.selected {
+      opacity: 1;
+      transform: scale(1.2);
+    }
+    
+    .question {
+      margin: 15px 0;
+    }
+    
+    .goal-options {
+      display: flex;
+      gap: 10px;
+      margin: 10px 0;
+    }
+    
+    .goal-option {
+      flex: 1;
+      padding: 8px;
+      text-align: center;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+    
+    .goal-option.selected {
+      background-color: #e91e63;
+      color: white;
+      border-color: #e91e63;
+    }
+    
+    textarea {
+      width: 100%;
+      padding: 8px;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      resize: vertical;
+      min-height: 80px;
+      box-sizing: border-box;
+      margin-top: 5px;
+    }
+    
+    .submit-btn {
+      background-color: #e91e63;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      padding: 10px 15px;
+      cursor: pointer;
+      width: 100%;
+      margin-top: 15px;
+    }
+    
+    .submit-btn:hover {
+      background-color: #d81b60;
+    }
+  </style>
+</head>
+<body>
+  <!-- Feedback button -->
+  <button class="feedback-button" id="feedbackBtn">Feedback</button>
+  
+  <!-- Feedback popup -->
+  <div class="feedback-popup" id="feedbackPopup">
+    <div class="popup-header">
+      <h3>Help us improve our website experience</h3>
+      <button class="close-btn" id="closeBtn">×</button>
+    </div>
+    <div class="popup-content">
+      <div class="question">
+        <p>What do you think of this page?</p>
+        <div class="emoji-rating">
+          <div class="emoji-option" data-rating="1">😠</div>
+          <div class="emoji-option" data-rating="2">😞</div>
+          <div class="emoji-option" data-rating="3">😐</div>
+          <div class="emoji-option" data-rating="4">🙂</div>
+          <div class="emoji-option" data-rating="5">😄</div>
+        </div>
+      </div>
+      
+      <div class="question">
+        <p>Did you achieve your goal?</p>
+        <div class="goal-options">
+          <div class="goal-option" data-goal="yes">Yes</div>
+          <div class="goal-option" data-goal="partially">Partially</div>
+          <div class="goal-option" data-goal="no">No</div>
+        </div>
+      </div>
+      
+      <div class="question">
+        <p>Would you like to add a comment?</p>
+        <textarea id="feedbackComment" placeholder="Tell us more about your experience..."></textarea>
+      </div>
+      
+      <button class="submit-btn" id="submitBtn">Submit</button>
+    </div>
+  </div>
+
+  <script>
+    // DOM elements
+    const feedbackBtn = document.getElementById('feedbackBtn');
+    const feedbackPopup = document.getElementById('feedbackPopup');
+    const closeBtn = document.getElementById('closeBtn');
+    const submitBtn = document.getElementById('submitBtn');
+    const emojiOptions = document.querySelectorAll('.emoji-option');
+    const goalOptions = document.querySelectorAll('.goal-option');
+    
+    // Show popup when feedback button is clicked
+    feedbackBtn.addEventListener('click', () => {
+      feedbackPopup.style.display = 'block';
+      feedbackBtn.style.display = 'none';
+    });
+    
+    // Hide popup when close button is clicked
+    closeBtn.addEventListener('click', () => {
+      feedbackPopup.style.display = 'none';
+      feedbackBtn.style.display = 'block';
+    });
+    
+    // Handle emoji selection
+    emojiOptions.forEach(option => {
+      option.addEventListener('click', () => {
+        // Remove selected class from all options
+        emojiOptions.forEach(opt => opt.classList.remove('selected'));
+        // Add selected class to clicked option
+        option.classList.add('selected');
+      });
+    });
+    
+    // Handle goal option selection
+    goalOptions.forEach(option => {
+      option.addEventListener('click', () => {
+        // Remove selected class from all options
+        goalOptions.forEach(opt => opt.classList.remove('selected'));
+        // Add selected class to clicked option
+        option.classList.add('selected');
+      });
+    });
+    
+    // Handle form submission
+    submitBtn.addEventListener('click', () => {
+      // Get selected rating
+      const selectedRating = document.querySelector('.emoji-option.selected');
+      const rating = selectedRating ? selectedRating.getAttribute('data-rating') : null;
+      
+      // Get selected goal
+      const selectedGoal = document.querySelector('.goal-option.selected');
+      const goal = selectedGoal ? selectedGoal.getAttribute('data-goal') : null;
+      
+      // Get comment
+      const comment = document.getElementById('feedbackComment').value;
+      
+      // Create feedback object
+      const feedback = {
+        rating,
+        goal,
+        comment
+      };
+      
+      // Here you would typically send this data to your server
+      console.log('Feedback submitted:', feedback);
+      
+      // Show thank you message or close popup
+      alert('Thank you for your feedback!');
+      feedbackPopup.style.display = 'none';
+      feedbackBtn.style.display = 'block';
+    });
+  </script>
+</body>
+</html>

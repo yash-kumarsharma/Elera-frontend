@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Investment Calculator</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {
+            background-color: #f4f7fa;
+            font-family: 'Arial', sans-serif;
+        }
+        .gradient-bg {
+            background: linear-gradient(135deg, #ff69b4 0%, #8a4fff 100%);
+        }
+    </style>
+</head>
+<body class="min-h-screen bg-[#f4f7fa] flex flex-col">
+    <div class="container mx-auto px-4 py-8 flex-grow">
+        <div class="max-w-4xl mx-auto">
+            <div class="gradient-bg text-white py-6 px-8 rounded-t-xl mb-6">
+                <h1 class="text-3xl font-bold text-center">Investment Calculator</h1>
+                <p class="text-center mt-2 opacity-80">Plan Your Financial Future</p>
+            </div>
+
+            <div class="bg-white shadow-lg rounded-b-xl p-8">
+                <form id="investment-form">
+                    <div class="grid md:grid-cols-2 gap-6">
+                        <div>
+                            <label class="block text-gray-700 font-bold mb-2">Annual Salary ($)</label>
+                            <input 
+                                type="number" 
+                                id="annual-salary" 
+                                required 
+                                min="0"
+                                class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#8a4fff]"
+                            >
+                        </div>
+                        <div>
+                            <label class="block text-gray-700 font-bold mb-2">Monthly Investment (%)</label>
+                            <input 
+                                type="number" 
+                                id="investment-percentage" 
+                                required 
+                                min="1" 
+                                max="50"
+                                class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#8a4fff]"
+                            >
+                        </div>
+                        <div>
+                            <label class="block text-gray-700 font-bold mb-2">Investment Duration (Years)</label>
+                            <input 
+                                type="number" 
+                                id="investment-duration" 
+                                required 
+                                min="1" 
+                                max="50"
+                                class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#8a4fff]"
+                            >
+                        </div>
+                        <div>
+                            <label class="block text-gray-700 font-bold mb-2">Expected Annual Return (%)</label>
+                            <select 
+                                id="investment-type"
+                                class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#8a4fff]"
+                            >
+                                <option value="low">Low Risk (3-5%)</option>
+                                <option value="medium">Medium Risk (6-8%)</option>
+                                <option value="high">High Risk (9-12%)</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <button 
+                        type="submit" 
+                        class="w-full mt-6 bg-[#ff69b4] hover:bg-[#ff3a8e] text-white font-bold py-3 px-4 rounded-md transition duration-300 ease-in-out transform hover:scale-105"
+                    >
+                        Calculate Investment Potential
+                    </button>
+                </form>
+
+                <div 
+                    id="results-container" 
+                    class="mt-8 hidden"
+                >
+                    <h2 class="text-2xl font-bold mb-4 text-gray-800">Investment Projection</h2>
+                    <div id="investment-summary" class="grid md:grid-cols-2 gap-4"></div>
+                    <div id="chart-container" class="mt-6 bg-gray-50 p-4 rounded-md"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('investment-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Get form values
+            const annualSalary = parseFloat(document.getElementById('annual-salary').value);
+            const investmentPercentage = parseFloat(document.getElementById('investment-percentage').value);
+            const investmentDuration = parseInt(document.getElementById('investment-duration').value);
+            const investmentType = document.getElementById('investment-type').value;
+            
+            // Calculate investment details
+            const investmentDetails = calculateInvestmentProjection(
+                annualSalary, 
+                investmentPercentage, 
+                investmentDuration, 
+                investmentType
+            );
+            
+            // Display results
+            const resultsContainer = document.getElementById('results-container');
+            const investmentSummary = document.getElementById('investment-summary');
+            const chartContainer = document.getElementById('chart-container');
+            
+            // Populate investment summary
+            investmentSummary.innerHTML = `
+                <div class="bg-white p-4 rounded-lg shadow-md">
+                    <h3 class="text-lg font-bold text-[#ff69b4] mb-2">Monthly Investment</h3>
+                    <p class="text-gray-700">$${investmentDetails.monthlyInvestment.toFixed(2)}</p>
+                </div>
+                <div class="bg-white p-4 rounded-lg shadow-md">
+                    <h3 class="text-lg font-bold text-[#8a4fff] mb-2">Total Investment</h3>
+                    <p class="text-gray-700">$${investmentDetails.totalInvestment.toFixed(2)}</p>
+                </div>
+                <div class="bg-white p-4 rounded-lg shadow-md">
+                    <h3 class="text-lg font-bold text-[#ff69b4] mb-2">Projected Value</h3>
+                    <p class="text-gray-700">$${investmentDetails.projectedValue.toFixed(2)}</p>
+                </div>
+                <div class="bg-white p-4 rounded-lg shadow-md">
+                    <h3 class="text-lg font-bold text-[#8a4fff] mb-2">Total Returns</h3>
+                    <p class="text-gray-700">$${investmentDetails.totalReturns.toFixed(2)}</p>
+                </div>
+            `;
+            
+            // Create a simple text-based year-by-year breakdown
+            chartContainer.innerHTML = `
+                <h3 class="text-xl font-bold mb-4 text-gray-800">Year-by-Year Investment Growth</h3>
+                <div class="bg-white p-4 rounded-lg shadow-md">
+                    <pre class="text-sm text-gray-700 overflow-x-auto">${generateYearlyBreakdown(investmentDetails)}</pre>
+                </div>
+            `;
+            
+            // Show results
+            resultsContainer.classList.remove('hidden');
+        });
+
+        function calculateInvestmentProjection(annualSalary, investmentPercentage, duration, riskType) {
+            // Determine return rates based on risk type
+            const returnRates = {
+                'low': 0.04,
+                'medium': 0.07,
+                'high': 0.10
+            };
+            
+            // Calculate monthly investment
+            const monthlyInvestment = (annualSalary * (investmentPercentage / 100)) / 12;
+            const totalInvestment = monthlyInvestment * (duration * 12);
+            
+            // Calculate compound interest
+            const annualReturnRate = returnRates[riskType];
+            const projectedValue = calculateCompoundInterest(
+                monthlyInvestment, 
+                annualReturnRate, 
+                duration
+            );
+            
+            return {
+                monthlyInvestment,
+                totalInvestment,
+                projectedValue,
+                totalReturns: projectedValue - totalInvestment,
+                annualReturnRate: annualReturnRate * 100
+            };
+        }
+
+        function calculateCompoundInterest(monthlyContribution, annualRate, years) {
+            let totalValue = 0;
+            let currentValue = 0;
+            
+            for (let year = 1; year <= years; year++) {
+                // Calculate annual contribution
+                const annualContribution = monthlyContribution * 12;
+                
+                // Grow previous balance
+                currentValue = (currentValue + annualContribution) * (1 + annualRate);
+                
+                totalValue = currentValue;
+            }
+            
+            return totalValue;
+        }
+
+        function generateYearlyBreakdown(investmentDetails) {
+            let breakdown = "Year | Contribution | Balance | Growth\n";
+            breakdown += "-----+---------------+---------+--------\n";
+            
+            let currentValue = 0;
+            const monthlyInvestment = investmentDetails.monthlyInvestment;
+            const annualRate = investmentDetails.annualReturnRate / 100;
+            
+            for (let year = 1; year <= 10; year++) {
+                // Calculate annual contribution
+                const annualContribution = monthlyInvestment * 12;
+                
+                // Grow previous balance
+                currentValue = (currentValue + annualContribution) * (1 + annualRate);
+                
+                breakdown += `${year.toString().padStart(4)} | $${(annualContribution).toFixed(2).padStart(12)} | $${currentValue.toFixed(2).padStart(8)} | ${(annualRate * 100).toFixed(2)}%\n`;
+            }
+            
+            return breakdown;
+        }
+    </script>
+</body>
+</html>

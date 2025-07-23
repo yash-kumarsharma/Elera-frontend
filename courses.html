@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ELIRA</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {
+            background-color: #f4f7fa;
+            font-family: 'Arial', sans-serif;
+        }
+        .gradient-bg {
+            background: linear-gradient(135deg, #ff69b4 0%, #8a4fff 100%);
+        }
+    </style>
+</head>
+<body class="min-h-screen">
+    <div class="container mx-auto max-w-6xl px-4 py-6">
+        <!-- Navbar -->
+        <nav class="flex justify-between items-center mb-16">
+            <div class="text-2xl font-bold text-gray-800">ELIRA</div>
+            <div class="flex items-center space-x-6">
+                <a href="#" class="text-gray-600 hover:text-gray-800">Home</a>
+                <a href="#courses" class="text-gray-600 hover:text-gray-800">Courses</a>
+                <a href="#instructors" class="text-gray-600 hover:text-gray-800">Instructors</a>
+                <a href="#" class="text-gray-600 hover:text-gray-800">Blog</a>
+                <button id="login" class="gradient-bg text-white px-4 py-2 rounded-lg hover:opacity-90">
+                    Login/Signup
+                </button>
+            </div>
+        </nav>
+
+        <!-- Hero Section -->
+        <main class="grid md:grid-cols-2 gap-8 items-center mb-16">
+            <div class="space-y-6">
+                <h1 class="text-5xl font-bold text-gray-900 leading-tight">
+                    Master the Art of Investing
+                </h1>
+                <p class="text-gray-600 text-lg">
+                    Transform your financial future with expert-led courses. From beginner to advanced, learn strategies that top investors use to build wealth.
+                </p>
+                <div class="flex space-x-4">
+                    <button id="explore-courses" class="gradient-bg text-white px-6 py-3 rounded-lg hover:opacity-90">
+                        Explore Courses
+                    </button>
+                    <button id="free-webinar" class="text-purple-600 border border-purple-300 px-6 py-3 rounded-lg hover:bg-purple-50">
+                        Free Webinar
+                    </button>
+                </div>
+                <div class="flex items-center space-x-4">
+                    <div class="flex -space-x-2">
+                        <img src="student1.jpg" alt="Student" class="w-12 h-12 rounded-full border-2 border-white object-cover"/>
+                        <img src="images.jpeg" alt="Student" class="w-12 h-12 rounded-full border-2 border-white object-cover"/>
+                        <img src="student3.jpg" alt="Student" class="w-12 h-12 rounded-full border-2 border-white object-cover"/>
+                    </div>
+                    <p class="text-gray-600">1000+ Students Enrolled</p>
+                </div>
+            </div>
+            <div>
+                <div class="bg-white rounded-2xl shadow-lg p-6">
+                    <h3 class="text-2xl font-bold mb-4 text-center">Featured Course Preview</h3>
+                    <div class="bg-gray-100 rounded-lg h-64 mb-4 flex items-center justify-center overflow-hidden">
+                        <img 
+                            src="course.jpg" 
+                            alt="Investment Courses" 
+                            class="w-full h-full object-cover rounded-lg"
+                        />
+                    </div>
+                    <div class="grid grid-cols-3 gap-2">
+                        <div class="bg-purple-100 h-16 rounded-lg"></div>
+                        <div class="bg-purple-100 h-16 rounded-lg"></div>
+                        <div class="bg-purple-100 h-16 rounded-lg"></div>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <!-- Courses Section -->
+        <section id="courses" class="mb-16">
+            <h2 class="text-3xl font-bold text-center mb-12">Our Investment Courses</h2>
+            <div class="grid md:grid-cols-3 gap-6">
+                <!-- Beginner Course -->
+                <div class="bg-white rounded-2xl shadow-md p-6">
+                    <div class="bg-purple-100 h-48 rounded-lg mb-4 flex items-center justify-center">
+                        Beginner Course Image
+                    </div>
+                    <h3 class="text-xl font-semibold mb-2">Investing 101</h3>
+                    <p class="text-gray-600 mb-4">Fundamental investment strategies for complete beginners.</p>
+                    <div class="flex justify-between items-center">
+                        <span class="text-purple-600 font-bold">$99</span>
+                        <button class="gradient-bg text-white px-4 py-2 rounded-lg hover:opacity-90">
+                            Enroll Now
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Intermediate Course -->
+                <div class="bg-white rounded-2xl shadow-md p-6">
+                    <div class="bg-purple-100 h-48 rounded-lg mb-4 flex items-center justify-center">
+                        Intermediate Course Image
+                    </div>
+                    <h3 class="text-xl font-semibold mb-2">Stock Market Mastery</h3>
+                    <p class="text-gray-600 mb-4">Advanced techniques for stock market investing and portfolio management.</p>
+                    <div class="flex justify-between items-center">
+                        <span class="text-purple-600 font-bold">$199</span>
+                        <button class="gradient-bg text-white px-4 py-2 rounded-lg hover:opacity-90">
+                            Enroll Now
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Advanced Course -->
+                <div class="bg-white rounded-2xl shadow-md p-6">
+                    <div class="bg-purple-100 h-48 rounded-lg mb-4 flex items-center justify-center">
+                        Advanced Course Image
+                    </div>
+                    <h3 class="text-xl font-semibold mb-2">Wealth Building Strategies</h3>
+                    <p class="text-gray-600 mb-4">Comprehensive approach to long-term wealth creation and passive income.</p>
+                    <div class="flex justify-between items-center">
+                        <span class="text-purple-600 font-bold">$299</span>
+                        <button class="gradient-bg text-white px-4 py-2 rounded-lg hover:opacity-90">
+                            Enroll Now
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Why Choose Us Section -->
+        <section class="gradient-bg text-white rounded-2xl p-12 mb-16">
+            <div class="text-center mb-12">
+                <h2 class="text-4xl font-bold mb-4">Why Learn With Us</h2>
+                <p class="text-xl">Our unique approach combines expert knowledge, practical skills, and real-world experience.</p>
+            </div>
+            <div class="grid md:grid-cols-3 gap-6 text-center">
+                <div>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mx-auto mb-4">
+                        <path d="M12 20v-6M6 20V10M18 20V4" />
+                    </svg>
+                    <h3 class="text-2xl font-bold mb-2">Proven Strategies</h3>
+                    <p>Learn techniques used by successful investors</p>
+                </div>
+                <div>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mx-auto mb-4">
+                        <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+                    </svg>
+                    <h3 class="text-2xl font-bold mb-2">Expert Guidance</h3>
+                    <p>Learn from industry professionals</p>
+                </div>
+                <div>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mx-auto mb-4">
+                        <rect x="3" y="11" width="18" height="11" rx="2" ry="2" />
+                        <path d="M7 11V7a5 5 0 0 1 10 0v4" />
+                    </svg>
+                    <h3 class="text-2xl font-bold mb-2">Lifetime Access</h3>
+                    <p>Continuous learning and updates</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Testimonials Section -->
+        <section class="mb-16">
+            <h2 class="text-3xl font-bold text-center mb-12">What Our Students Say</h2>
+            <div class="grid md:grid-cols-3 gap-6">
+                <div class="bg-white rounded-2xl shadow-md p-6">
+                    <p class="text-gray-600 mb-4">"This course completely transformed my understanding of investing. Highly recommended!"</p>
+                    <div class="flex items-center">
+                        <img src="images.jpeg" alt="Student" class="w-12 h-12 rounded-full object-cover mr-4"/>
+                        <div>
+                            <h4 class="font-semibold">Sarah Johnson</h4>
+                            <p class="text-gray-500">Software Engineer</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="bg-white rounded-2xl shadow-md p-6">
+                    <p class="text-gray-600 mb-4">"The practical insights have been invaluable. I've already seen improvements in my portfolio."</p>
+                    <div class="flex items-center">
+                        <img src="student1.jpg" alt="Student" class="w-12 h-12 rounded-full object-cover mr-4"/>
+                        <div>
+                            <h4 class="font-semibold">Mike Thompson</h4>
+                            <p class="text-gray-500">Marketing Manager</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="bg-white rounded-2xl shadow-md p-6">
+                    <p class="text-gray-600 mb-4">"As a beginner, this course made investing seem less intimidating and more accessible."</p>
+                    <div class="flex items-center">
+                        <img src="student3.jpg" alt="Student" class="w-12 h-12 rounded-full object-cover mr-4"/>
+                        <div>
+                            <h4 class="font-semibold">Emily Rodriguez</h4>
+                            <p class="text-gray-500">Teacher</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Call to Action -->
+        <section class="gradient-bg text-white rounded-2xl p-12 text-center">
+            <h2 class="text-4xl font-bold mb-4">Start Your Investment Journey Today</h2>
+            <p class="text-xl mb-8">Don't wait to take control of your financial future. Enroll now and unlock your potential.</p>
+            <div class="flex justify-center space-x-4">
+                <button class="bg-white text-purple-600 px-8 py-3 rounded-lg hover:bg-gray-100">
+                    View All Courses
+                </button>
+                <button class="border border-white text-white px-8 py-3 rounded-lg hover:bg-opacity-20">
+                    Free Consultation
+                </button>
+            </div>
+        </section>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            var buttons = document.querySelectorAll('button');
+            
+            buttons.forEach(function(button) {
+                button.addEventListener('mouseenter', function() {
+                    this.style.transform = 'scale(1.05)';
+                });
+                
+                button.addEventListener('mouseleave', function() {
+                    this.style.transform = 'scale(1)';
+                });
+                
+                button.addEventListener('click', function() {
+                    switch(this.id) {
+                        case 'login':
+                            alert('Redirecting to Login/Signup');
+                            break;
+                        case 'explore-courses':
+                            alert('Exploring Investment Courses');
+                            break;
+                        case 'free-webinar':
+                            alert('Registering for Free Webinar');
+                            break;
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,616 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Legal Aid Services</title>
+    <!-- Add Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Arial', sans-serif;
+        }
+        
+        body {
+            background-color: #f4f7fa;
+            font-family: 'Arial', sans-serif;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        /* Header styling */
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+            background: linear-gradient(135deg, #ff69b4 0%, #8a4fff 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .nav-links {
+            display: flex;
+            gap: 20px;
+        }
+        
+        .nav-links a {
+            text-decoration: none;
+            color: #555;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+        
+        .nav-links a:hover {
+            color: #ff69b4;
+        }
+        
+        .user-actions {
+            display: flex;
+            gap: 15px;
+            align-items: center;
+        }
+        
+        .icon-button {
+            background: none;
+            border: none;
+            color: #555;
+            font-size: 20px;
+            cursor: pointer;
+            transition: color 0.3s;
+        }
+        
+        .icon-button:hover {
+            color: #ff69b4;
+        }
+        
+        /* Page title */
+        .page-title {
+            margin-bottom: 30px;
+            color: #333;
+        }
+        
+        .page-title h1 {
+            font-size: 32px;
+            margin-bottom: 10px;
+        }
+        
+        .page-title p {
+            color: #666;
+            font-size: 16px;
+        }
+        
+        /* Filter section */
+        .filters {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+        }
+        
+        .filter-button {
+            padding: 10px 20px;
+            background-color: white;
+            border: 1px solid #ddd;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-weight: 500;
+            color: #555;
+        }
+        
+        .filter-button:hover {
+            border-color: #ff69b4;
+            color: #ff69b4;
+        }
+        
+        .filter-button.active {
+            background: linear-gradient(135deg, #ff69b4 0%, #8a4fff 100%);
+            color: white;
+            border-color: transparent;
+        }
+        
+        /* Cards grid */
+        .cards-grid {
+            display: grid;
+            grid-template-columns: repeat(1, 1fr);
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+        
+        @media (min-width: 640px) {
+            .cards-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+        
+        @media (min-width: 1024px) {
+            .cards-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+        
+        /* Service card */
+        .service-card {
+            background-color: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        
+        .service-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+        }
+        
+        .card-image {
+            height: 200px;
+            background-color: #f0f0f0;
+            background-size: cover;
+            background-position: center;
+        }
+        
+        .card-content {
+            padding: 20px;
+        }
+        
+        .card-title {
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 10px;
+            color: #333;
+        }
+        
+        .card-description {
+            color: #666;
+            font-size: 14px;
+            line-height: 1.6;
+            margin-bottom: 20px;
+        }
+        
+        .card-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+        
+        .card-category {
+            font-size: 12px;
+            background-color: #f0f0f0;
+            padding: 4px 10px;
+            border-radius: 12px;
+            color: #555;
+        }
+        
+        .card-rating {
+            color: gold;
+            font-size: 14px;
+        }
+        
+        .card-pricing {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+        
+        .card-price {
+            font-weight: bold;
+            color: #333;
+            font-size: 18px;
+        }
+        
+        .price-type {
+            font-size: 14px;
+            color: #666;
+        }
+        
+        .free-label {
+            color: #00ab66;
+        }
+        
+        .card-actions {
+            display: flex;
+            gap: 10px;
+        }
+        
+        .primary-button {
+            background: linear-gradient(135deg, #ff69b4 0%, #8a4fff 100%);
+            color: white;
+            border: none;
+            border-radius: 6px;
+            padding: 10px 15px;
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.3s;
+            flex: 1;
+            text-align: center;
+            font-weight: bold;
+            box-shadow: 0 4px 6px rgba(138, 79, 255, 0.2);
+        }
+        
+        .primary-button:hover {
+            opacity: 0.9;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 8px rgba(138, 79, 255, 0.25);
+        }
+        
+        .secondary-button {
+            background-color: white;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            padding: 10px 0;
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.3s;
+            flex: 0 0 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #555;
+        }
+        
+        .secondary-button:hover {
+            border-color: #ff69b4;
+            color: #ff69b4;
+        }
+        
+        /* Pagination */
+        .pagination {
+            display: flex;
+            justify-content: center;
+            gap: 5px;
+            margin-top: 40px;
+        }
+        
+        .pagination-button {
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            border: 1px solid #ddd;
+            background-color: white;
+            color: #555;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .pagination-button:hover {
+            border-color: #ff69b4;
+            color: #ff69b4;
+        }
+        
+        .pagination-button.active {
+            background: linear-gradient(135deg, #ff69b4 0%, #8a4fff 100%);
+            color: white;
+            border-color: transparent;
+        }
+        
+        /* Badge for featured or popular items */
+        .badge {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: linear-gradient(135deg, #ff69b4 0%, #8a4fff 100%);
+            color: white;
+            padding: 5px 10px;
+            border-radius: 4px;
+            font-size: 12px;
+            font-weight: bold;
+        }
+        
+        /* Loading skeleton */
+        @keyframes pulse {
+            0% { opacity: 0.6; }
+            50% { opacity: 1; }
+            100% { opacity: 0.6; }
+        }
+        
+        .skeleton {
+            background-color: #f0f0f0;
+            animation: pulse 1.5s infinite;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <div class="logo">ELIRA</div>
+            <!-- <nav class="nav-links">
+                <a href="#">Home</a>
+                <a href="#">Services</a>
+                <a href="#">Resources</a>
+                <a href="#">About Us</a>
+                <a href="#">Contact</a>
+            </nav> -->
+            <div class="user-actions">
+                <button class="icon-button"><i class="fas fa-search"></i></button>
+                <button class="icon-button"><i class="fas fa-heart"></i></button>
+                <button class="icon-button"><i class="fas fa-shopping-cart"></i></button>
+                <button class="icon-button"><i class="fas fa-user"></i></button>
+            </div>
+        </header>
+        
+        
+        <div class="page-title">
+            <h1>Wearable Tech</h1>
+            <p>Browse our range of wearable products and resources designed to help you with your safety needs.</p>
+        </div>
+        
+        <!-- <div class="filters">
+            <button class="filter-button active">All Services</button>
+            <button class="filter-button">Family Law</button>
+            <button class="filter-button">Immigration</button>
+            <button class="filter-button">Housing</button>
+            <button class="filter-button">Employment</button>
+            <button class="filter-button">Criminal Defense</button>
+            <button class="filter-button">Free Services</button>
+        </div> -->
+        
+        <!-- Cards Grid -->
+        <div class="cards-grid">
+            <!-- Card 1 -->
+            <div class="service-card">
+                <div class="card-image" style="background-image: url('https://i.pinimg.com/736x/69/f2/6a/69f26aa037cb8773af41bb87ced0f36c.jpg')">
+                    <div class="badge">Popular</div>
+                </div>
+                <div class="card-content">
+                    <div class="card-meta">
+                        <span class="card-category">Instock</span>
+                        <span class="card-rating">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star-half-alt"></i>
+                            <span style="color: #555; margin-left: 5px;">4.5</span>
+                        </span>
+                    </div>
+                    <h3 class="card-title">Alliance Ring</h3>
+                    <p class="card-description">A smart IoT-based ring equipped with an SOS button and real-time GPS tracking ensures women's safety with discreet emergency alerts.</p>
+                    <div class="card-pricing">
+                        <div class="card-price">Rs. 999 <span class="price-type">/ item</span></div>
+                        
+                    </div>
+                    <div class="card-actions">
+                        <button class="primary-button">Buy Product</button>
+                        <button class="secondary-button"><i class="far fa-heart"></i></button>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Card 2 -->
+            <div class="service-card">
+                <div class="card-image" style="background-image: url('https://i.pinimg.com/236x/da/f3/ce/daf3cef40ef3e8a6ca853b35b9b7fdce.jpg')"></div>
+                <div class="card-content">
+                    <div class="card-meta">
+                        <span class="card-category">Instock</span>
+                        <span class="card-rating">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="far fa-star"></i>
+                            <span style="color: #555; margin-left: 5px;">4.0</span>
+                        </span>
+                    </div>
+                    <h3 class="card-title">Self Defense Hairpins</h3>
+                    <p class="card-description">Sharp women self defense hairpins for critical emergenecy situations</p><br>
+                    <div class="card-pricing">
+                        <div class="card-price">Rs. 2099 <span class="price-type">/ item</span></div>
+                    </div>
+                    <div class="card-actions">
+                        <button class="primary-button">Buy Product</button>
+                        <button class="secondary-button"><i class="far fa-heart"></i></button>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Card 3 -->
+            <div class="service-card">
+                <div class="card-image" style="background-image: url('https://leatherbeltshop.com/wp-content/uploads/2021/06/MGP5243.webp')">
+                    <div class="badge">Featured</div>
+                </div>
+                <div class="card-content">
+                    <div class="card-meta">
+                        <span class="card-category">Out of stock</span>
+                        <span class="card-rating">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <span style="color: #555; margin-left: 5px;">5.0</span>
+                        </span>
+                    </div>
+                    <h3 class="card-title">Electric Belts</h3>
+                    <p class="card-description">An IoT-enabled electric belt with shock activation and GPS alerts for women's self-defense and safety.</p><br>
+                    <div class="card-pricing">
+                        <div class="card-price">Rs. 1299 <span class="price-type">/ item</span></div>
+                    </div>
+                    <div class="card-actions">
+                        <button class="primary-button">Buy Product</button>
+                        <button class="secondary-button"><i class="far fa-heart"></i></button>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Card 4 -->
+            <div class="service-card">
+                <div class="card-image" style="background-image: url('https://www.zohowebstatic.com/sites/zweb/images/lens/smart-glasses-software/smart-glass.png')">
+                    <div class="badge">Featured</div>
+                </div>
+                <div class="card-content">
+                    <div class="card-meta">
+                        <span class="card-category">Instock</span>
+                        <span class="card-rating">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <span style="color: #555; margin-left: 5px;">5.0</span>
+                        </span>
+                    </div>
+                    <h3 class="card-title">AR Smart Glasses</h3>
+                    <p class="card-description">AR smart glasses with facial recognition, real-time navigation, and emergency alerts for enhanced safety and awareness.</p><br>
+                    <div class="card-pricing">
+                        <div class="card-price">Rs. 4299 <span class="price-type">/ item</span></div>
+                    </div>
+                    <div class="card-actions">
+                        <button class="primary-button">Buy Product</button>
+                        <button class="secondary-button"><i class="far fa-heart"></i></button>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Card 5 -->
+            <div class="service-card">
+                <div class="card-image" style="background-image: url('https://www.zag-store.com/cdn/shop/files/2-ALLIANCERING_1024x1024.png?v=1717066335')">
+                    <div class="badge">Featured</div>
+                </div>
+                <div class="card-content">
+                    <div class="card-meta">
+                        <span class="card-category">Instock</span>
+                        <span class="card-rating">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <span style="color: #555; margin-left: 5px;">5.0</span>
+                        </span>
+                    </div>
+                    <h3 class="card-title">Alliance Ring</h3>
+                    <p class="card-description">A smart IoT-based ring equipped with an SOS button and real-time GPS tracking ensures women's safety with discreet emergency alerts</p><br>
+                    <div class="card-pricing">
+                        <div class="card-price">Rs. 1199 <span class="price-type">/ item</span></div>
+                    </div>
+                    <div class="card-actions">
+                        <button class="primary-button">Buy Product</button>
+                        <button class="secondary-button"><i class="far fa-heart"></i></button>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Card 6 -->
+            <div class="service-card">
+                <div class="card-image" style="background-image: url('https://m.media-amazon.com/images/I/61RMj+-Bs+L.AC_UY1100.jpg')">
+                    <div class="badge">Featured</div>
+                </div>
+                <div class="card-content">
+                    <div class="card-meta">
+                        <span class="card-category">Instock</span>
+                        <span class="card-rating">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <span style="color: #555; margin-left: 5px;">5.0</span>
+                        </span>
+                    </div>
+                    <h3 class="card-title">Electric Belts</h3>
+                    <p class="card-description">An IoT-enabled electric belt with shock activation and GPS alerts for women's self-defense and safety.</p><br><br>
+                    <div class="card-pricing">
+                        <div class="card-price">Rs. 2299 <span class="price-type">/ item</span></div>
+                    </div>
+                    <div class="card-actions">
+                        <button class="primary-button">Buy Product</button>
+                        <button class="secondary-button"><i class="far fa-heart"></i></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="pagination">
+            <button class="pagination-button"><i class="fas fa-chevron-left"></i></button>
+            <button class="pagination-button active">1</button>
+            <button class="pagination-button">2</button>
+            <button class="pagination-button">3</button>
+            <button class="pagination-button">4</button>
+            <button class="pagination-button">5</button>
+            <button class="pagination-button"><i class="fas fa-chevron-right"></i></button>
+        </div>
+    </div>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+           
+            const filterButtons = document.querySelectorAll('.filter-button');
+            
+            filterButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    
+                    filterButtons.forEach(btn => {
+                        btn.classList.remove('active');
+                    });
+                    
+                   
+                    this.classList.add('active');
+                    
+                    alert(Filtering by: ${this.textContent});
+                });
+            });
+            
+           
+            const heartButtons = document.querySelectorAll('.secondary-button');
+            
+            heartButtons.forEach(button => {
+                button.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const icon = this.querySelector('i');
+                    
+                    if (icon.classList.contains('far')) {
+                        icon.classList.remove('far');
+                        icon.classList.add('fas');
+                        icon.style.color = '#ff69b4';
+                    } else {
+                        icon.classList.remove('fas');
+                        icon.classList.add('far');
+                        icon.style.color = '';
+                    }
+                });
+            });
+            
+           
+            const paginationButtons = document.querySelectorAll('.pagination-button');
+            
+            paginationButtons.forEach(button => {
+                if (!button.querySelector('i')) {
+                    button.addEventListener('click', function() {
+                        
+                        paginationButtons.forEach(btn => {
+                            btn.classList.remove('active');
+                        });
+                        
+                        this.classList.add('active');
+                        // alert(Navigating to page ${this.textContent});
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+</html>

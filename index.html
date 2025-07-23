@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mohali Crime Heatmap & Safe Routes</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css">
+    <style>
+        body, html { margin: 0; padding: 0; height: 100%; font-family: Arial, sans-serif; }
+        #map { height: 100vh; width: 75%; float: right; }
+        #sidebar { width: 25%; height: 100vh; background: #222; color: white; padding: 15px; position: absolute; left: 0; }
+        #find-route-btn { background-color: green; color: white; padding: 10px; border: none; cursor: pointer; border-radius: 5px; width: 100%; }
+        select, table { width: 100%; margin: 10px 0; padding: 5px; background: #444; color: white; border: none; }
+        table { border-collapse: collapse; }
+        th, td { border: 1px solid white; padding: 5px; text-align: left; }
+    </style>
+</head>
+<body>
+    <div id="sidebar">
+        <h3>Crime Data & Safe Route Finder</h3>
+        <label>Start Location:</label>
+        <select id="start-location">
+            <option value="30.7409,76.7821">Sector 17, Chandigarh</option>
+        </select>
+        <label>End Location:</label>
+        <select id="end-location">
+            <option value="30.7212,76.7411">Sector 41, Chandigarh</option>
+        </select>
+        <button id="find-route-btn">Find Safe Route</button>
+        <h4>Recent Crimes</h4>
+        <table>
+            <tr><th>Type</th><th>Location</th><th>Time</th></tr>
+            <tbody id="crime-table">
+                <tr><td>Snatching</td><td>Sector 19, Chandigarh</td><td>9:45 PM</td></tr>
+                <tr><td>Molestation</td><td>Sector 58, Mohali</td><td>7:30 PM</td></tr>
+                <tr><td>Acid throwing</td><td>Sector 38 West, Chandigarh</td><td>5:50 PM</td></tr>
+                <tr><td>Murder</td><td>Sector 47, Chandigarh</td><td>2:10 AM</td></tr>
+                <tr><td>Physical Violence</td><td>Sector 9, Chandigarh</td><td>11:15 PM</td></tr>
+            </tbody>
+        </table>
+    </div>
+    <div id="map"></div>
+
+    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+    <script>
+        let map = L.map('map').setView([30.7046, 76.7179], 13);
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(map);
+
+        const crimeData = [
+            { type: "Snatching", lat: 30.7272, lon: 76.7794, location: "Sector 25, Chandigarh", time: "9:45 PM" },
+            { type: "Molestation", lat: 30.6894, lon: 76.7213, location: "Sector 70, Mohali", time: "7:30 PM" },
+            { type: "Acid throwing", lat: 30.7521, lon: 76.7676, location: "Sector 38 West, Chandigarh", time: "5:50 PM" },
+            { type: "Murder", lat: 30.7101, lon: 76.7864, location: "Sector 47, Chandigarh", time: "2:10 AM" },
+            { type: "Physical Violence", lat: 30.7500, lon: 76.7800, location: "Sector 90, Mohali", time: "11:15 PM" }
+        ];
+
+        crimeData.forEach(crime => {
+            L.circle([crime.lat, crime.lon], {
+                color: "red",
+                fillColor: "#f03",
+                fillOpacity: 0.5,
+                radius: 300
+            }).addTo(map).bindPopup(`<b>${crime.type}</b><br>Location: ${crime.location}<br>Time: ${crime.time}`);
+        });
+
+        document.getElementById("find-route-btn").addEventListener("click", () => {
+            let start = { lat: 30.7409, lon: 76.7821 }; // Sector 17, Chandigarh
+            let end = { lat: 30.7212, lon: 76.7411 };   // Sector 41, Chandigarh
+
+            fetch("http://127.0.0.1:5000/find-safe-route", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ start, end })
+            })
+            .then(res => res.json())
+            .then(data => {
+                if (data.routes) {
+                    let routeCoords = data.routes[0].geometry.coordinates.map(coord => [coord[1], coord[0]]);
+                    let safeRoute = L.polyline(routeCoords, { color: "green", weight: 5 }).addTo(map);
+                    map.fitBounds(safeRoute.getBounds());
+                } else {
+                    alert("Error fetching safe route.");
+                }
+            });
+        });
+    </script>
+</body>
+</html>

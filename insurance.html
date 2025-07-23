@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Health Insurance Comparison</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {
+            background-color: #f4f7fa;
+            font-family: 'Arial', sans-serif;
+        }
+        .gradient-bg {
+            background: linear-gradient(135deg, #ff69b4 0%, #8a4fff 100%);
+        }
+    </style>
+</head>
+<body class="min-h-screen bg-[#f4f7fa] flex flex-col">
+    <div class="container mx-auto px-4 py-8 flex-grow">
+        <div class="max-w-4xl mx-auto">
+            <div class="gradient-bg text-white py-6 px-8 rounded-t-xl mb-6">
+                <h1 class="text-3xl font-bold text-center">Health Insurance Comparison</h1>
+                <p class="text-center mt-2 opacity-80">Find the perfect plan tailored to your needs</p>
+            </div>
+
+            <div class="bg-white shadow-lg rounded-b-xl p-8">
+                <form id="insurance-form">
+                    <div class="grid md:grid-cols-2 gap-6">
+                        <div>
+                            <label class="block text-gray-700 font-bold mb-2">Age</label>
+                            <input 
+                                type="number" 
+                                id="age" 
+                                required 
+                                min="18" 
+                                max="100"
+                                class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#8a4fff]"
+                            >
+                        </div>
+                        <div>
+                            <label class="block text-gray-700 font-bold mb-2">Annual Income ($)</label>
+                            <input 
+                                type="number" 
+                                id="income" 
+                                required 
+                                min="0"
+                                class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#8a4fff]"
+                            >
+                        </div>
+                        <div>
+                            <label class="block text-gray-700 font-bold mb-2">Health Conditions</label>
+                            <select 
+                                id="health-conditions" 
+                                multiple
+                                class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#8a4fff]"
+                            >
+                                <option value="none">No Specific Conditions</option>
+                                <option value="diabetes">Diabetes</option>
+                                <option value="heart-disease">Heart Disease</option>
+                                <option value="asthma">Asthma</option>
+                                <option value="hypertension">Hypertension</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-gray-700 font-bold mb-2">Coverage Preference</label>
+                            <select 
+                                id="coverage-type"
+                                class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#8a4fff]"
+                            >
+                                <option value="basic">Basic Coverage</option>
+                                <option value="comprehensive">Comprehensive</option>
+                                <option value="premium">Premium</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <button 
+                        type="submit" 
+                        class="w-full mt-6 bg-[#ff69b4] hover:bg-[#ff3a8e] text-white font-bold py-3 px-4 rounded-md transition duration-300 ease-in-out transform hover:scale-105"
+                    >
+                        Compare Insurance Plans
+                    </button>
+                </form>
+
+                <div 
+                    id="results-container" 
+                    class="mt-8 hidden"
+                >
+                    <h2 class="text-2xl font-bold mb-4 text-gray-800">Recommended Insurance Plans</h2>
+                    <div id="plans-list" class="grid md:grid-cols-3 gap-4"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('insurance-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Get form values
+            const age = parseInt(document.getElementById('age').value);
+            const income = parseFloat(document.getElementById('income').value);
+            const healthConditions = Array.from(
+                document.getElementById('health-conditions').selectedOptions
+            ).map(option => option.value);
+            const coverageType = document.getElementById('coverage-type').value;
+            
+            // Generate plans
+            const plans = generateInsurancePlans(age, income, healthConditions, coverageType);
+            
+            // Display results
+            const resultsContainer = document.getElementById('results-container');
+            const plansList = document.getElementById('plans-list');
+            
+            // Clear previous results
+            plansList.innerHTML = '';
+            
+            // Populate plans
+            plans.forEach(plan => {
+                const planCard = document.createElement('div');
+                planCard.className = 'bg-white border border-gray-200 rounded-lg p-4 shadow-md hover:shadow-lg transition-all';
+                planCard.innerHTML = `
+                    <h3 class="text-lg font-bold mb-2 text-[#ff69b4]">${plan.name}</h3>
+                    <p class="text-gray-600 mb-2">Monthly Premium: $${plan.monthlyPremium.toFixed(2)}</p>
+                    <p class="text-gray-600 mb-2">Deductible: $${plan.deductible.toFixed(2)}</p>
+                    <p class="text-gray-600 mb-4">Coverage: ${plan.coverage}</p>
+                    <button class="w-full bg-[#8a4fff] text-white py-2 rounded-md hover:bg-[#7a3fff]">
+                        Select Plan
+                    </button>
+                `;
+                plansList.appendChild(planCard);
+            });
+            
+            // Show results
+            resultsContainer.classList.remove('hidden');
+        });
+
+        function generateInsurancePlans(age, income, healthConditions, coverageType) {
+            // Base premium calculation
+            const baseRate = 200;
+            let ageAdjustment = 0;
+            let conditionAdjustment = 0;
+            let coverageAdjustment = 0;
+
+            // Age-based adjustment
+            if (age < 30) ageAdjustment = -50;
+            else if (age >= 30 && age < 45) ageAdjustment = 0;
+            else if (age >= 45 && age < 60) ageAdjustment = 100;
+            else ageAdjustment = 200;
+
+            // Health conditions adjustment
+            if (healthConditions.includes('diabetes')) conditionAdjustment += 100;
+            if (healthConditions.includes('heart-disease')) conditionAdjustment += 200;
+            if (healthConditions.includes('asthma')) conditionAdjustment += 50;
+            if (healthConditions.includes('hypertension')) conditionAdjustment += 75;
+
+            // Coverage type adjustment
+            switch(coverageType) {
+                case 'basic':
+                    coverageAdjustment = -50;
+                    break;
+                case 'comprehensive':
+                    coverageAdjustment = 100;
+                    break;
+                case 'premium':
+                    coverageAdjustment = 250;
+                    break;
+            }
+
+            // Generate plans
+            return [
+                {
+                    name: 'Basic Health Shield',
+                    monthlyPremium: baseRate + ageAdjustment + conditionAdjustment/2 + coverageAdjustment/2,
+                    deductible: 2500,
+                    coverage: 'Basic Medical Coverage'
+                },
+                {
+                    name: 'Comprehensive Care Plan',
+                    monthlyPremium: baseRate + ageAdjustment + conditionAdjustment + coverageAdjustment,
+                    deductible: 1500,
+                    coverage: 'Comprehensive Medical Coverage'
+                },
+                {
+                    name: 'Premium Wellness Package',
+                    monthlyPremium: baseRate + ageAdjustment + conditionAdjustment * 1.5 + coverageAdjustment * 1.5,
+                    deductible: 500,
+                    coverage: 'Full Medical Coverage with Wellness Benefits'
+                }
+            ];
+        }
+    </script>
+</body>
+</html>
