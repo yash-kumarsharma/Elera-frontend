@@ -1,10 +1,17 @@
-# 🌟 Elira: Empowering Women Through Technology
+# 🌟 Elira: Empowering Women Through Technology 
+
 
 A web platform focused on enhancing women's **safety** and **financial independence** through accessible tools and resources.
 
 > Built with **HTML5**, **CSS3 (Tailwind CSS)**, **JavaScript**, and a **Flask (Python)** backend for features like safe route mapping.
 
 🔗 **Live Website:** [Elira — Github Pages](https://yash-kumarsharma.github.io/Elira/)
+
+---
+
+## 🏆 Recognition
+
+🎖️ **Hackathon Winner** – This project was built as part of a hackathon and recognized for its innovation, impact, and execution.
 
 ---
 
@@ -113,5 +120,3 @@ Crafted with 💡 passion and 💻 purpose by the
 ---
 
 ⭐ _If you found this project helpful or inspiring, give it a star to show your support!_
-
-
