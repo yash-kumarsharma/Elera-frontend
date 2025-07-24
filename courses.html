@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ELIRA</title>
+    <title>ELIRA - Investment Courses</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         body {
@@ -17,21 +17,22 @@
 </head>
 <body class="min-h-screen">
     <div class="container mx-auto max-w-6xl px-4 py-6">
-        <!-- Navbar -->
-        <nav class="flex justify-between items-center mb-16">
-            <div class="text-2xl font-bold text-gray-800">ELIRA</div>
+        <nav class="flex justify-between items-center py-4 mb-8">
+            <div class="text-2xl font-bold text-gray-800">
+                <a href="index.html" class="text-xl font-bold text-black no-underline">Elira</a>
+            </div>
             <div class="flex items-center space-x-6">
-                <a href="#" class="text-gray-600 hover:text-gray-800">Home</a>
-                <a href="#courses" class="text-gray-600 hover:text-gray-800">Courses</a>
-                <a href="#instructors" class="text-gray-600 hover:text-gray-800">Instructors</a>
-                <a href="#" class="text-gray-600 hover:text-gray-800">Blog</a>
-                <button id="login" class="gradient-bg text-white px-4 py-2 rounded-lg hover:opacity-90">
-                    Login/Signup
-                </button>
+                <a href="index.html" class="text-gray-600 hover:text-pink-600">Safety Home</a>
+                <a href="financial_home.html" class="text-gray-600 hover:text-pink-600">Financial Tools</a>
+                <a href="courses.html" class="text-gray-600 hover:text-pink-600">Courses</a>
+                <a href="consult.html" class="text-gray-600 hover:text-pink-600">Consult</a>
+                <a href="safe_routes_map.html" class="text-gray-600 hover:text-pink-600">Safe Map</a>
+                <a href="legal.html" class="text-gray-600 hover:text-pink-600">Legal Help</a>
+                <a href="shop.html" class="text-gray-600 hover:text-pink-600">Shop</a>
+                <a href="login.html" class="bg-pink-500 text-white px-4 py-2 rounded-md hover:bg-pink-600">Login/Register</a>
             </div>
         </nav>
 
-        <!-- Hero Section -->
         <main class="grid md:grid-cols-2 gap-8 items-center mb-16">
             <div class="space-y-6">
                 <h1 class="text-5xl font-bold text-gray-900 leading-tight">
@@ -76,11 +77,9 @@
             </div>
         </main>
 
-        <!-- Courses Section -->
         <section id="courses" class="mb-16">
             <h2 class="text-3xl font-bold text-center mb-12">Our Investment Courses</h2>
             <div class="grid md:grid-cols-3 gap-6">
-                <!-- Beginner Course -->
                 <div class="bg-white rounded-2xl shadow-md p-6">
                     <div class="bg-purple-100 h-48 rounded-lg mb-4 flex items-center justify-center">
                         Beginner Course Image
@@ -95,7 +94,6 @@
                     </div>
                 </div>
 
-                <!-- Intermediate Course -->
                 <div class="bg-white rounded-2xl shadow-md p-6">
                     <div class="bg-purple-100 h-48 rounded-lg mb-4 flex items-center justify-center">
                         Intermediate Course Image
@@ -110,7 +108,6 @@
                     </div>
                 </div>
 
-                <!-- Advanced Course -->
                 <div class="bg-white rounded-2xl shadow-md p-6">
                     <div class="bg-purple-100 h-48 rounded-lg mb-4 flex items-center justify-center">
                         Advanced Course Image
@@ -127,7 +124,6 @@
             </div>
         </section>
 
-        <!-- Why Choose Us Section -->
         <section class="gradient-bg text-white rounded-2xl p-12 mb-16">
             <div class="text-center mb-12">
                 <h2 class="text-4xl font-bold mb-4">Why Learn With Us</h2>
@@ -159,7 +155,6 @@
             </div>
         </section>
 
-        <!-- Testimonials Section -->
         <section class="mb-16">
             <h2 class="text-3xl font-bold text-center mb-12">What Our Students Say</h2>
             <div class="grid md:grid-cols-3 gap-6">
@@ -196,7 +191,6 @@
             </div>
         </section>
 
-        <!-- Call to Action -->
         <section class="gradient-bg text-white rounded-2xl p-12 text-center">
             <h2 class="text-4xl font-bold mb-4">Start Your Investment Journey Today</h2>
             <p class="text-xl mb-8">Don't wait to take control of your financial future. Enroll now and unlock your potential.</p>
@@ -214,16 +208,16 @@
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             var buttons = document.querySelectorAll('button');
-            
+
             buttons.forEach(function(button) {
                 button.addEventListener('mouseenter', function() {
                     this.style.transform = 'scale(1.05)';
                 });
-                
+
                 button.addEventListener('mouseleave', function() {
                     this.style.transform = 'scale(1)';
                 });
-                
+
                 button.addEventListener('click', function() {
                     switch(this.id) {
                         case 'login':

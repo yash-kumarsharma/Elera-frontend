@@ -3,30 +3,24 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Legal Aid Services</title>
-    <!-- Add Font Awesome for icons -->
+    <title>ELIRA - Wearable Tech Shop</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <style>
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-            font-family: 'Arial', sans-serif;
-        }
-        
+    <script src="https://cdn.tailwindcss.com"></script> <style>
         body {
             background-color: #f4f7fa;
             font-family: 'Arial', sans-serif;
+            margin: 0;
             padding: 20px;
+            color: #333;
+            line-height: 1.6;
         }
-        
+
         .container {
             max-width: 1200px;
             margin: 0 auto;
         }
         
-        /* Header styling */
-        .header {
+        .header-content { 
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -44,7 +38,7 @@
             background-clip: text;
         }
         
-        .nav-links {
+        .nav-links { 
             display: flex;
             gap: 20px;
         }
@@ -79,7 +73,6 @@
             color: #ff69b4;
         }
         
-        /* Page title */
         .page-title {
             margin-bottom: 30px;
             color: #333;
@@ -95,7 +88,6 @@
             font-size: 16px;
         }
         
-        /* Filter section */
         .filters {
             display: flex;
             gap: 15px;
@@ -145,13 +137,13 @@
             }
         }
         
-        /* Service card */
         .service-card {
             background-color: white;
             border-radius: 12px;
             overflow: hidden;
             box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
             transition: transform 0.3s, box-shadow 0.3s;
+            position: relative; 
         }
         
         .service-card:hover {
@@ -272,7 +264,6 @@
             color: #ff69b4;
         }
         
-        /* Pagination */
         .pagination {
             display: flex;
             justify-content: center;
@@ -306,7 +297,6 @@
             border-color: transparent;
         }
         
-        /* Badge for featured or popular items */
         .badge {
             position: absolute;
             top: 15px;
@@ -319,7 +309,6 @@
             font-weight: bold;
         }
         
-        /* Loading skeleton */
         @keyframes pulse {
             0% { opacity: 0.6; }
             50% { opacity: 1; }
@@ -334,43 +323,30 @@
     </style>
 </head>
 <body>
-    <div class="container">
-        <header class="header">
-            <div class="logo">ELIRA</div>
-            <!-- <nav class="nav-links">
-                <a href="#">Home</a>
-                <a href="#">Services</a>
-                <a href="#">Resources</a>
-                <a href="#">About Us</a>
-                <a href="#">Contact</a>
-            </nav> -->
-            <div class="user-actions">
-                <button class="icon-button"><i class="fas fa-search"></i></button>
-                <button class="icon-button"><i class="fas fa-heart"></i></button>
-                <button class="icon-button"><i class="fas fa-shopping-cart"></i></button>
-                <button class="icon-button"><i class="fas fa-user"></i></button>
+    <div class="container mx-auto max-w-6xl px-4 py-6">
+        <nav class="flex justify-between items-center py-4 mb-8">
+            <div class="text-2xl font-bold text-gray-800">
+                <a href="index.html" class="text-xl font-bold text-black no-underline">Elira</a>
             </div>
-        </header>
-        
-        
+            <div class="flex items-center space-x-6">
+                <a href="index.html" class="text-gray-600 hover:text-pink-600">Safety Home</a>
+                <a href="financial_home.html" class="text-gray-600 hover:text-pink-600">Financial Tools</a>
+                <a href="courses.html" class="text-gray-600 hover:text-pink-600">Courses</a>
+                <a href="consult.html" class="text-gray-600 hover:text-pink-600">Consult</a>
+                <a href="safe_routes_map.html" class="text-gray-600 hover:text-pink-600">Safe Map</a>
+                <a href="legal.html" class="text-gray-600 hover:text-pink-600">Legal Help</a>
+                <a href="shop.html" class="text-gray-600 hover:text-pink-600">Shop</a>
+                <a href="login.html" class="bg-pink-500 text-white px-4 py-2 rounded-md hover:bg-pink-600">Login/Register</a>
+            </div>
+        </nav>
+    </div>
+
+    <div class="container">
         <div class="page-title">
-            <h1>Wearable Tech</h1>
-            <p>Browse our range of wearable products and resources designed to help you with your safety needs.</p>
+            <h1>Wearable Tech & Safety Products</h1> <p>Browse our range of wearable products and resources designed to help you with your safety needs.</p>
         </div>
         
-        <!-- <div class="filters">
-            <button class="filter-button active">All Services</button>
-            <button class="filter-button">Family Law</button>
-            <button class="filter-button">Immigration</button>
-            <button class="filter-button">Housing</button>
-            <button class="filter-button">Employment</button>
-            <button class="filter-button">Criminal Defense</button>
-            <button class="filter-button">Free Services</button>
-        </div> -->
-        
-        <!-- Cards Grid -->
         <div class="cards-grid">
-            <!-- Card 1 -->
             <div class="service-card">
                 <div class="card-image" style="background-image: url('https://i.pinimg.com/736x/69/f2/6a/69f26aa037cb8773af41bb87ced0f36c.jpg')">
                     <div class="badge">Popular</div>
@@ -391,7 +367,6 @@
                     <p class="card-description">A smart IoT-based ring equipped with an SOS button and real-time GPS tracking ensures women's safety with discreet emergency alerts.</p>
                     <div class="card-pricing">
                         <div class="card-price">Rs. 999 <span class="price-type">/ item</span></div>
-                        
                     </div>
                     <div class="card-actions">
                         <button class="primary-button">Buy Product</button>
@@ -400,7 +375,6 @@
                 </div>
             </div>
             
-            <!-- Card 2 -->
             <div class="service-card">
                 <div class="card-image" style="background-image: url('https://i.pinimg.com/236x/da/f3/ce/daf3cef40ef3e8a6ca853b35b9b7fdce.jpg')"></div>
                 <div class="card-content">
@@ -416,7 +390,7 @@
                         </span>
                     </div>
                     <h3 class="card-title">Self Defense Hairpins</h3>
-                    <p class="card-description">Sharp women self defense hairpins for critical emergenecy situations</p><br>
+                    <p class="card-description">Sharp women self defense hairpins for critical emergency situations.</p><br>
                     <div class="card-pricing">
                         <div class="card-price">Rs. 2099 <span class="price-type">/ item</span></div>
                     </div>
@@ -427,7 +401,6 @@
                 </div>
             </div>
             
-            <!-- Card 3 -->
             <div class="service-card">
                 <div class="card-image" style="background-image: url('https://leatherbeltshop.com/wp-content/uploads/2021/06/MGP5243.webp')">
                     <div class="badge">Featured</div>
@@ -456,7 +429,6 @@
                 </div>
             </div>
             
-            <!-- Card 4 -->
             <div class="service-card">
                 <div class="card-image" style="background-image: url('https://www.zohowebstatic.com/sites/zweb/images/lens/smart-glasses-software/smart-glass.png')">
                     <div class="badge">Featured</div>
@@ -485,7 +457,6 @@
                 </div>
             </div>
             
-            <!-- Card 5 -->
             <div class="service-card">
                 <div class="card-image" style="background-image: url('https://www.zag-store.com/cdn/shop/files/2-ALLIANCERING_1024x1024.png?v=1717066335')">
                     <div class="badge">Featured</div>
@@ -503,7 +474,7 @@
                         </span>
                     </div>
                     <h3 class="card-title">Alliance Ring</h3>
-                    <p class="card-description">A smart IoT-based ring equipped with an SOS button and real-time GPS tracking ensures women's safety with discreet emergency alerts</p><br>
+                    <p class="card-description">A smart IoT-based ring equipped with an SOS button and real-time GPS tracking ensures women's safety with discreet emergency alerts.</p><br>
                     <div class="card-pricing">
                         <div class="card-price">Rs. 1199 <span class="price-type">/ item</span></div>
                     </div>
@@ -514,7 +485,6 @@
                 </div>
             </div>
             
-            <!-- Card 6 -->
             <div class="service-card">
                 <div class="card-image" style="background-image: url('https://m.media-amazon.com/images/I/61RMj+-Bs+L.AC_UY1100.jpg')">
                     <div class="badge">Featured</div>
@@ -557,7 +527,7 @@
     
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-           
+            
             const filterButtons = document.querySelectorAll('.filter-button');
             
             filterButtons.forEach(button => {
@@ -567,14 +537,12 @@
                         btn.classList.remove('active');
                     });
                     
-                   
                     this.classList.add('active');
                     
-                    alert(Filtering by: ${this.textContent});
+                    alert(`Filtering by: ${this.textContent}`);
                 });
             });
             
-           
             const heartButtons = document.querySelectorAll('.secondary-button');
             
             heartButtons.forEach(button => {
@@ -585,20 +553,19 @@
                     if (icon.classList.contains('far')) {
                         icon.classList.remove('far');
                         icon.classList.add('fas');
-                        icon.style.color = '#ff69b4';
+                        icon.style.color = '#ff69b4'; 
                     } else {
                         icon.classList.remove('fas');
                         icon.classList.add('far');
-                        icon.style.color = '';
+                        icon.style.color = ''; 
                     }
                 });
             });
             
-           
             const paginationButtons = document.querySelectorAll('.pagination-button');
             
             paginationButtons.forEach(button => {
-                if (!button.querySelector('i')) {
+                if (!button.querySelector('i')) { 
                     button.addEventListener('click', function() {
                         
                         paginationButtons.forEach(btn => {
@@ -606,7 +573,6 @@
                         });
                         
                         this.classList.add('active');
-                        // alert(Navigating to page ${this.textContent});
                     });
                 }
             });

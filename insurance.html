@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Health Insurance Comparison</title>
+    <title>ELIRA - Health Insurance Comparison</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         body {
@@ -15,7 +15,25 @@
         }
     </style>
 </head>
-<body class="min-h-screen bg-[#f4f7fa] flex flex-col">
+<body class="min-h-screen flex flex-col">
+    <div class="container mx-auto max-w-6xl px-4 py-6">
+        <nav class="flex justify-between items-center py-4 mb-8">
+            <div class="text-2xl font-bold text-gray-800">
+                <a href="index.html" class="text-xl font-bold text-black no-underline">Elira</a>
+            </div>
+            <div class="flex items-center space-x-6">
+                <a href="index.html" class="text-gray-600 hover:text-pink-600">Safety Home</a>
+                <a href="financial_home.html" class="text-gray-600 hover:text-pink-600">Financial Tools</a>
+                <a href="courses.html" class="text-gray-600 hover:text-pink-600">Courses</a>
+                <a href="consult.html" class="text-gray-600 hover:text-pink-600">Consult</a>
+                <a href="safe_routes_map.html" class="text-gray-600 hover:text-pink-600">Safe Map</a>
+                <a href="legal.html" class="text-gray-600 hover:text-pink-600">Legal Help</a>
+                <a href="shop.html" class="text-gray-600 hover:text-pink-600">Shop</a>
+                <a href="login.html" class="bg-pink-500 text-white px-4 py-2 rounded-md hover:bg-pink-600">Login/Register</a>
+            </div>
+        </nav>
+    </div>
+
     <div class="container mx-auto px-4 py-8 flex-grow">
         <div class="max-w-4xl mx-auto">
             <div class="gradient-bg text-white py-6 px-8 rounded-t-xl mb-6">
@@ -96,26 +114,21 @@
     <script>
         document.getElementById('insurance-form').addEventListener('submit', function(e) {
             e.preventDefault();
-            
-            // Get form values
+
             const age = parseInt(document.getElementById('age').value);
             const income = parseFloat(document.getElementById('income').value);
             const healthConditions = Array.from(
                 document.getElementById('health-conditions').selectedOptions
             ).map(option => option.value);
             const coverageType = document.getElementById('coverage-type').value;
-            
-            // Generate plans
+
             const plans = generateInsurancePlans(age, income, healthConditions, coverageType);
-            
-            // Display results
+
             const resultsContainer = document.getElementById('results-container');
             const plansList = document.getElementById('plans-list');
-            
-            // Clear previous results
+
             plansList.innerHTML = '';
-            
-            // Populate plans
+
             plans.forEach(plan => {
                 const planCard = document.createElement('div');
                 planCard.className = 'bg-white border border-gray-200 rounded-lg p-4 shadow-md hover:shadow-lg transition-all';
@@ -130,31 +143,26 @@
                 `;
                 plansList.appendChild(planCard);
             });
-            
-            // Show results
+
             resultsContainer.classList.remove('hidden');
         });
 
         function generateInsurancePlans(age, income, healthConditions, coverageType) {
-            // Base premium calculation
             const baseRate = 200;
             let ageAdjustment = 0;
             let conditionAdjustment = 0;
             let coverageAdjustment = 0;
 
-            // Age-based adjustment
             if (age < 30) ageAdjustment = -50;
             else if (age >= 30 && age < 45) ageAdjustment = 0;
             else if (age >= 45 && age < 60) ageAdjustment = 100;
             else ageAdjustment = 200;
 
-            // Health conditions adjustment
             if (healthConditions.includes('diabetes')) conditionAdjustment += 100;
             if (healthConditions.includes('heart-disease')) conditionAdjustment += 200;
             if (healthConditions.includes('asthma')) conditionAdjustment += 50;
             if (healthConditions.includes('hypertension')) conditionAdjustment += 75;
 
-            // Coverage type adjustment
             switch(coverageType) {
                 case 'basic':
                     coverageAdjustment = -50;
@@ -167,7 +175,6 @@
                     break;
             }
 
-            // Generate plans
             return [
                 {
                     name: 'Basic Health Shield',

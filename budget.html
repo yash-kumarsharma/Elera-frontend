@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Personalized Budget Planner</title>
+    <title>ELIRA - Personalized Budget Planner</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         body {
@@ -15,9 +15,26 @@
         }
     </style>
 </head>
-<body class="bg-[#f4f7fa] min-h-screen flex items-center justify-center">
-    <div class="w-full max-w-md mx-auto bg-white shadow-lg rounded-xl p-6">
-        <div class="gradient-bg text-white py-4 px-6 rounded-t-xl -mx-6 -mt-6 mb-6">
+<body class="bg-[#f4f7fa] min-h-screen flex flex-col items-center">
+    <div class="container mx-auto max-w-6xl px-4 py-6">
+        <nav class="flex justify-between items-center py-4 mb-8">
+            <div class="text-2xl font-bold text-gray-800">
+                <a href="index.html" class="text-xl font-bold text-black no-underline">Elira</a>
+            </div>
+            <div class="flex items-center space-x-6">
+                <a href="index.html" class="text-gray-600 hover:text-pink-600">Safety Home</a>
+                <a href="financial_home.html" class="text-gray-600 hover:text-pink-600">Financial Tools</a>
+                <a href="courses.html" class="text-gray-600 hover:text-pink-600">Courses</a>
+                <a href="consult.html" class="text-gray-600 hover:text-pink-600">Consult</a>
+                <a href="safe_routes_map.html" class="text-gray-600 hover:text-pink-600">Safe Map</a>
+                <a href="legal.html" class="text-gray-600 hover:text-pink-600">Legal Help</a>
+                <a href="shop.html" class="text-gray-600 hover:text-pink-600">Shop</a>
+                <a href="login.html" class="bg-pink-500 text-white px-4 py-2 rounded-md hover:bg-pink-600">Login/Register</a>
+            </div>
+        </nav>
+    </div>
+
+    <div class="w-full max-w-md mx-auto bg-white shadow-lg rounded-xl p-6 mb-8"> <div class="gradient-bg text-white py-4 px-6 rounded-t-xl -mx-6 -mt-6 mb-6">
             <h1 class="text-2xl font-bold text-center">Personalized Budget Planner</h1>
         </div>
         
@@ -88,15 +105,12 @@
         document.getElementById('budget-form').addEventListener('submit', function(e) {
             e.preventDefault();
             
-            // Get form values
             const income = parseFloat(document.getElementById('monthly-income').value);
             const familySize = parseInt(document.getElementById('family-size').value);
             const financialGoal = document.getElementById('financial-goal').value;
             
-            // Budget allocation logic
             const budgetAllocation = calculateBudget(income, familySize, financialGoal);
-            
-            // Display results
+   
             const resultDiv = document.getElementById('budget-result');
             const detailsDiv = document.getElementById('budget-details');
             
@@ -139,7 +153,6 @@
         });
         
         function calculateBudget(income, familySize, financialGoal) {
-            // Base percentages with adjustments for family size and financial goal
             let baseAllocation = {
                 housing: 30,
                 food: 15,
@@ -149,14 +162,12 @@
                 miscellaneous: 20
             };
             
-            // Adjust for family size
             if (familySize > 2) {
                 baseAllocation.housing += 5;
                 baseAllocation.food += 3;
                 baseAllocation.miscellaneous -= 3;
             }
             
-            // Adjust for financial goal
             switch(financialGoal) {
                 case 'save':
                     baseAllocation.savings += 10;
@@ -176,7 +187,6 @@
                     break;
             }
             
-            // Calculate dollar amounts
             return {
                 housing: income * (baseAllocation.housing / 100),
                 housingPercentage: baseAllocation.housing,

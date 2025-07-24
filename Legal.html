@@ -4,540 +4,508 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Legal & Support Resources</title>
-</head>
-<style>
-  /* Base Styles */
-  body {
-    background-color: #f4f7fa;
-    font-family: 'Arial', sans-serif;
-    margin: 0;
-    padding: 0;
-    color: #333;
-    line-height: 1.6;
-  }
+  <title>ELIRA - Legal & Support Resources</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <script src="https://cdn.tailwindcss.com"></script> <style>
 
-  .container {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 20px;
-  }
+    body {
+      background-color: #f4f7fa;
+      font-family: 'Arial', sans-serif;
+      margin: 0;
+      padding: 0;
+      color: #333;
+      line-height: 1.6;
+    }
 
-  /* Header Styles */
-  header {
-    text-align: center;
-    padding: 40px 0;
-    margin-bottom: 30px;
-    border-radius: 10px;
-  }
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 20px;
+    }
 
-  .gradient-bg {
-    background: linear-gradient(135deg, #ff69b4 0%, #8a4fff 100%);
-    color: white;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-  }
+    header {
+      text-align: center;
+      padding: 40px 0;
+      margin-bottom: 30px;
+      border-radius: 10px;
+    }
 
-  header h1 {
-    margin: 0;
-    padding-bottom: 10px;
-    font-size: 2.5rem;
-  }
-
-  header p {
-    margin: 0;
-    font-size: 1.2rem;
-    opacity: 0.9;
-  }
-
-  /* Resource Grid Layout */
-  .resources-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
-    gap: 30px;
-    margin-top: 40px;
-  }
-
-  /* Resource Cards */
-  .resource-card {
-    background: white;
-    border-radius: 8px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
-    overflow: hidden;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-  }
-
-  .resource-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
-  }
-
-  .card-header {
-    padding: 15px 20px;
-    border-bottom: 1px solid #eee;
-  }
-
-  .card-header h2 {
-    margin: 0;
-    font-size: 1.5rem;
-  }
-
-  .card-content {
-    padding: 20px;
-  }
-
-  /* Card Categories */
-  .emergency {
-    border-left: 4px solid #ff5252;
-  }
-
-  .emergency .card-header {
-    background-color: rgba(255, 82, 82, 0.1);
-  }
-
-  .cybercrime {
-    border-left: 4px solid #4caf50;
-  }
-
-  .cybercrime .card-header {
-    background-color: rgba(76, 175, 80, 0.1);
-  }
-
-  .legal-advice {
-    border-left: 4px solid #2196f3;
-  }
-
-  .legal-advice .card-header {
-    background-color: rgba(33, 150, 243, 0.1);
-  }
-
-  /* Resource Lists */
-  .resource-list {
-    list-style-type: none;
-    padding: 0;
-    margin: 0;
-  }
-
-  .resource-list li {
-    margin-bottom: 25px;
-    padding-bottom: 20px;
-    border-bottom: 1px solid #eee;
-  }
-
-  .resource-list li:last-child {
-    margin-bottom: 0;
-    padding-bottom: 0;
-    border-bottom: none;
-  }
-
-  .resource-list h3 {
-    margin: 0 0 8px 0;
-    font-size: 1.2rem;
-  }
-
-  .resource-list p {
-    margin: 0 0 15px 0;
-    color: #666;
-  }
-
-  /* Buttons */
-  .resource-button,
-  .contact-button {
-    display: inline-block;
-    padding: 8px 16px;
-    background: linear-gradient(135deg, #ff69b4 0%, #8a4fff 100%);
-    color: white;
-    text-decoration: none;
-    border-radius: 4px;
-    font-weight: bold;
-    transition: opacity 0.3s ease;
-  }
-
-  .resource-button:hover,
-  .contact-button:hover {
-    opacity: 0.9;
-  }
-
-  .contact-button {
-    background: #ff69b4;
-  }
-
-  /* Modal Styles */
-  .modal {
-    display: none;
-    position: fixed;
-    z-index: 1000;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.5);
-  }
-
-  .modal-content {
-    background-color: white;
-    margin: 10% auto;
-    padding: 30px;
-    width: 80%;
-    max-width: 600px;
-    border-radius: 8px;
-    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
-    position: relative;
-  }
-
-  .close-btn {
-    position: absolute;
-    top: 15px;
-    right: 20px;
-    font-size: 24px;
-    cursor: pointer;
-  }
-
-  .search-container {
-    display: flex;
-    gap: 10px;
-    margin: 20px 0;
-  }
-
-  #zipCodeInput {
-    flex: 1;
-    padding: 10px;
-    border: 1px solid #ddd;
-    border-radius: 4px;
-    font-size: 16px;
-  }
-
-  #searchByZip {
-    padding: 10px 20px;
-    background: linear-gradient(135deg, #ff69b4 0%, #8a4fff 100%);
-    color: white;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    font-weight: bold;
-  }
-
-  #searchByZip:hover {
-    opacity: 0.9;
-  }
-
-  #searchResults {
-    margin-top: 20px;
-  }
-
-  /* Responsive Adjustments */
-  @media (max-width: 768px) {
-    .resources-grid {
-      grid-template-columns: 1fr;
+    .gradient-bg {
+      background: linear-gradient(135deg, #ff69b4 0%, #8a4fff 100%);
+      color: white;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
     }
 
     header h1 {
-      font-size: 2rem;
+      margin: 0;
+      padding-bottom: 10px;
+      font-size: 2.5rem;
+    }
+
+    header p {
+      margin: 0;
+      font-size: 1.2rem;
+      opacity: 0.9;
+    }
+
+    .resources-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+      gap: 30px;
+      margin-top: 40px;
+    }
+
+    .resource-card {
+      background: white;
+      border-radius: 8px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+      overflow: hidden;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .resource-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
+    }
+
+    .card-header {
+      padding: 15px 20px;
+      border-bottom: 1px solid #eee;
+    }
+
+    .card-header h2 {
+      margin: 0;
+      font-size: 1.5rem;
+    }
+
+    .card-content {
+      padding: 20px;
+    }
+
+    .emergency {
+      border-left: 4px solid #ff5252;
+    }
+
+    .emergency .card-header {
+      background-color: rgba(255, 82, 82, 0.1);
+    }
+
+    .cybercrime {
+      border-left: 4px solid #4caf50;
+    }
+
+    .cybercrime .card-header {
+      background-color: rgba(76, 175, 80, 0.1);
+    }
+
+    .legal-advice {
+      border-left: 4px solid #2196f3;
+    }
+
+    .legal-advice .card-header {
+      background-color: rgba(33, 150, 243, 0.1);
+    }
+
+    .resource-list {
+      list-style-type: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    .resource-list li {
+      margin-bottom: 25px;
+      padding-bottom: 20px;
+      border-bottom: 1px solid #eee;
+    }
+
+    .resource-list li:last-child {
+      margin-bottom: 0;
+      padding-bottom: 0;
+      border-bottom: none;
+    }
+
+    .resource-list h3 {
+      margin: 0 0 8px 0;
+      font-size: 1.2rem;
+    }
+
+    .resource-list p {
+      margin: 0 0 15px 0;
+      color: #666;
+    }
+
+    .resource-button,
+    .contact-button {
+      display: inline-block;
+      padding: 8px 16px;
+      background: linear-gradient(135deg, #ff69b4 0%, #8a4fff 100%);
+      color: white;
+      text-decoration: none;
+      border-radius: 4px;
+      font-weight: bold;
+      transition: opacity 0.3s ease;
+    }
+
+    .resource-button:hover,
+    .contact-button:hover {
+      opacity: 0.9;
+    }
+
+    .contact-button {
+      background: #ff69b4;
+    }
+
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 1000;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.5);
     }
 
     .modal-content {
-      width: 90%;
-      margin: 15% auto;
+      background-color: white;
+      margin: 10% auto;
+      padding: 30px;
+      width: 80%;
+      max-width: 600px;
+      border-radius: 8px;
+      box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
+      position: relative;
     }
-  }
-</style>
 
-<body>
-  <div class="container">
-    <header class="gradient-bg">
-      <h1>Legal & Support Resources</h1>
-      <p>Access to helplines, cybercrime reporting portals, and legal advice</p>
-    </header>
-
-    <div class="resources-grid">
-      <!-- Emergency Helplines -->
-      <!-- Emergency Helplines -->
-      <div class="resource-card emergency">
-        <div class="card-header">
-          <h2>Emergency Helplines</h2>
-        </div>
-        <div class="card-content">
-          <ul class="resource-list">
-            <li>
-              <h3>National Emergency Number</h3>
-              <p>24/7 support for immediate assistance</p>
-              <a href="tel:112" class="contact-button">Call 112</a>
-            </li>
-            <li>
-              <h3>Women Helpline</h3>
-              <p>24/7 support for women in distress</p>
-              <a href="tel:1091" class="contact-button">Call 1091</a>
-            </li>
-            <li>
-              <h3>National Mental Health Helpline</h3>
-              <p>Support for mental health crisis</p>
-              <a href="tel:1800-599-0019" class="contact-button">1800-599-0019</a>
-            </li>
-          </ul>
-        </div>
-      </div>
-
-      <!-- Cybercrime Reporting -->
-      <!-- Cybercrime Reporting -->
-      <div class="resource-card cybercrime">
-        <div class="card-header">
-          <h2>Cybercrime Reporting</h2>
-        </div>
-        <div class="card-content">
-          <ul class="resource-list">
-            <li>
-              <h3>National Cyber Crime Reporting Portal</h3>
-              <p>Report all types of cybercrimes online</p>
-              <a href="https://cybercrime.gov.in/" target="_blank" class="resource-button">File a
-                Report</a>
-            </li>
-            <li>
-              <h3>Cyber Crime Helpline</h3>
-              <p>Report cybercrime via phone</p>
-              <a href="tel:1930" class="contact-button">Call 1930</a>
-            </li>
-            <li>
-              <h3>Ministry of Home Affairs</h3>
-              <p>Information about cybersecurity initiatives</p>
-              <a href="https://www.mha.gov.in/" target="_blank" class="resource-button">Visit Website</a>
-            </li>
-          </ul>
-        </div>
-      </div>
-
-      <!-- Legal Advice -->
-      <!-- Legal Advice -->
-      <div class="resource-card legal-advice">
-        <div class="card-header">
-          <h2>Legal Advice</h2>
-        </div>
-        <div class="card-content">
-          <ul class="resource-list">
-            <li>
-              <h3>National Legal Services Authority (NALSA)</h3>
-              <p>Free legal aid for eligible individuals</p>
-              <a href="#" class="resource-button" id="legalAidBtn">Find Local Authority</a>
-            </li>
-            <li>
-              <h3>Bar Council of India</h3>
-              <p>Lawyer referrals and legal resources</p>
-              <a href="http://www.barcouncilofindia.org/" target="_blank" class="resource-button">Find a
-                Lawyer</a>
-            </li>
-            <li>
-              <h3>e-Courts Services</h3>
-              <p>Online case status, judgments, and legal resources</p>
-              <a href="https://ecourts.gov.in/ecourts_home/" target="_blank" class="resource-button">Access e-Courts</a>
-            </li>
-          </ul>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- Location Finder Modal (hidden by default) -->
-  <div id="locationModal" class="modal">
-    <div class="modal-content">
-      <span class="close-btn">&times;</span>
-      <h2>Find Services Near You</h2>
-      <div class="search-container">
-        <input type="text" id="zipCodeInput" placeholder="Enter your PIN code">
-        <button id="searchByZip">Search</button>
-      </div>
-      <div id="searchResults">
-        <!-- Results will be added here dynamically -->
-      </div>
-    </div>
-  </div>
-
-  <script>
-    document.addEventListener('DOMContentLoaded', function () {
-      // Get modal elements
-      const modal = document.getElementById('locationModal');
-      const closeBtn = document.querySelector('.close-btn');
-      const legalAidBtn = document.getElementById('legalAidBtn');
-      const legalResourcesBtn = document.getElementById('legalResourcesBtn');
-      const searchByZipBtn = document.getElementById('searchByZip');
-      const zipCodeInput = document.getElementById('zipCodeInput');
-      const searchResults = document.getElementById('searchResults');
-
-      // Check if elements exist before adding event listeners
-      if (legalAidBtn) {
-        legalAidBtn.addEventListener('click', function (e) {
-          e.preventDefault();
-          modal.style.display = 'block';
-          searchResults.innerHTML = '';
-          document.querySelector('.modal-content h2').textContent = 'Find Legal Aid Services Near You';
-        });
-      }
-
-      if (legalResourcesBtn) {
-        legalResourcesBtn.addEventListener('click', function (e) {
-          e.preventDefault();
-          modal.style.display = 'block';
-          searchResults.innerHTML = '';
-          document.querySelector('.modal-content h2').textContent = 'Find Legal Resources Near You';
-        });
-      }
-
-      // Close modal when clicking the X
-      if (closeBtn) {
-        closeBtn.addEventListener('click', function () {
-          console.log('Close button clicked');
-          modal.style.display = 'none';
-        });
-      }
-
-      // Close modal when clicking outside the modal content
-      window.addEventListener('click', function (e) {
-        if (e.target === modal) {
-          modal.style.display = 'none';
-        }
-      });
-
-      // Search by PIN code
-      if (searchByZipBtn) {
-        searchByZipBtn.addEventListener('click', function () {
-          console.log('Search button clicked');
-          const zipCode = zipCodeInput.value.trim();
-          if (zipCode === '') {
-            searchResults.innerHTML = '<p class="error-message">Please enter a valid PIN code</p>';
-            return;
-          }
-
-          // This would typically be an AJAX call to a backend service
-          // For this demo, we'll simulate results
-          simulateSearch(zipCode);
-        });
-      }
-
-      // Allow pressing Enter key in the PIN input
-      if (zipCodeInput) {
-        zipCodeInput.addEventListener('keypress', function (e) {
-          if (e.key === 'Enter') {
-            if (searchByZipBtn) {
-              searchByZipBtn.click();
-            }
-          }
-        });
-      }
-
-      // Simulate search results (would be replaced with actual API call)
-      function simulateSearch(zipCode) {
-        // Show loading indicator
-        searchResults.innerHTML = '<p>Searching for resources near ' + zipCode + '...</p>';
-
-        // Simulate network delay
-        setTimeout(function () {
-          const isLegalAid = document.querySelector('.modal-content h2').textContent.includes('Legal Aid');
-
-          if (isLegalAid) {
-            // Legal Aid Offices results
-            searchResults.innerHTML = `
-                    <h3>Legal Aid Services Near ${zipCode}</h3>
-                    <div class="result-item">
-                        <h4>District Legal Services Authority</h4>
-                        <p>District Court Complex</p>
-                        <p>Phone: 011-2345-6789</p>
-                        <p>Services: Family disputes, property matters, criminal cases</p>
-                        <a href="#" class="resource-button">Contact Details</a>
-                    </div>
-                    <div class="result-item">
-                        <h4>NGO Legal Aid Centre</h4>
-                        <p>45 Civil Lines</p>
-                        <p>Phone: 011-9876-5432</p>
-                        <p>Services: Women's rights, domestic violence, child welfare</p>
-                        <a href="#" class="resource-button">Visit Website</a>
-                    </div>
-                    <div class="result-item">
-                        <h4>State Legal Aid Cell</h4>
-                        <p>High Court Annexe Building</p>
-                        <p>Phone: 011-2468-1357</p>
-                        <p>Services: Consumer disputes, labor issues, public interest litigation</p>
-                        <a href="#" class="resource-button">View Services</a>
-                    </div>
-                `;
-          } else {
-            // Legal Resources results
-            searchResults.innerHTML = `
-                    <h3>Legal Resources Near ${zipCode}</h3>
-                    <div class="result-item">
-                        <h4>District Court Law Library</h4>
-                        <p>District Court Complex, 1st Floor</p>
-                        <p>Free legal research materials and bare acts</p>
-                        <a href="#" class="resource-button">More Info</a>
-                    </div>
-                    <div class="result-item">
-                        <h4>Lok Adalat Center</h4>
-                        <p>Civil Court Building</p>
-                        <p>Alternative dispute resolution, case settlement</p>
-                        <a href="#" class="resource-button">Next Session Dates</a>
-                    </div>
-                    <div class="result-item">
-                        <h4>Legal Awareness Camp</h4>
-                        <p>Community Hall, Municipal Corporation</p>
-                        <p>Free legal consultations on designated days</p>
-                        <a href="#" class="resource-button">View Schedule</a>
-                    </div>
-                `;
-          }
-
-          // Add some CSS for the results
-          if (!document.getElementById('search-results-style')) {
-            const style = document.createElement('style');
-            style.id = 'search-results-style';
-            style.textContent = `
-                    .result-item {
-                        margin-bottom: 20px;
-                        padding-bottom: 20px;
-                        border-bottom: 1px solid #eee;
-                    }
-                    .result-item:last-child {
-                        border-bottom: none;
-                        margin-bottom: 0;
-                        padding-bottom: 0;
-                    }
-                    .result-item h4 {
-                        margin: 0 0 8px 0;
-                        color: #333;
-                    }
-                    .result-item p {
-                        margin: 0 0 8px 0;
-                        color: #666;
-                    }
-                    .error-message {
-                        color: #ff5252;
-                        font-weight: bold;
-                    }
-                `;
-            document.head.appendChild(style);
-          }
-
-        }, 1500); // Simulate 1.5 second delay
-      }
-
-      // Add console logs to help debug
-      console.log('DOM Content Loaded');
-      console.log('Modal element exists:', !!modal);
-      console.log('Close button exists:', !!closeBtn);
-      console.log('Search button exists:', !!searchByZipBtn);
-    });
-
-    // Add this CSS to your existing styles or create a new style element
-    const style = document.createElement('style');
-    style.id = 'modal-styles';
-    style.textContent = `
-    .modal-content {
-        max-height: 80vh; /* Limit height to 80% of viewport height */
-        overflow-y: auto; /* Enable vertical scrolling */
+    .close-btn {
+      position: absolute;
+      top: 15px;
+      right: 20px;
+      font-size: 24px;
+      cursor: pointer;
     }
-    
+
+    .search-container {
+      display: flex;
+      gap: 10px;
+      margin: 20px 0;
+    }
+
+    #zipCodeInput {
+      flex: 1;
+      padding: 10px;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      font-size: 16px;
+    }
+
+    #searchByZip {
+      padding: 10px 20px;
+      background: linear-gradient(135deg, #ff69b4 0%, #8a4fff 100%);
+      color: white;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      font-weight: bold;
+    }
+
+    #searchByZip:hover {
+      opacity: 0.9;
+    }
+
     #searchResults {
-        max-height: 60vh; /* Give the results container a maximum height */
-        overflow-y: auto; /* Enable vertical scrolling for just the results */
+      margin-top: 20px;
     }
-`;
-    document.head.appendChild(style);
-  </script>
-</body>
 
+    @media (max-width: 768px) {
+      .resources-grid {
+        grid-template-columns: 1fr;
+      }
+
+      header h1 {
+        font-size: 2rem;
+      }
+
+      .modal-content {
+        width: 90%;
+        margin: 15% auto;
+      }
+    }
+
+    .modal-content {
+        max-height: 80vh;
+        overflow-y: auto;
+    }
+
+    #searchResults {
+        max-height: 60vh; 
+        overflow-y: auto; 
+    }
+  </style>
+</head>
+<body>
+    <div class="container mx-auto max-w-6xl px-4 py-6">
+        <nav class="flex justify-between items-center py-4 mb-8">
+            <div class="text-2xl font-bold text-gray-800">
+                <a href="index.html" class="text-xl font-bold text-black no-underline">Elira</a>
+            </div>
+            <div class="flex items-center space-x-6">
+                <a href="index.html" class="text-gray-600 hover:text-pink-600">Safety Home</a>
+                <a href="financial_home.html" class="text-gray-600 hover:text-pink-600">Financial Tools</a>
+                <a href="courses.html" class="text-gray-600 hover:text-pink-600">Courses</a>
+                <a href="consult.html" class="text-gray-600 hover:text-pink-600">Consult</a>
+                <a href="safe_routes_map.html" class="text-gray-600 hover:text-pink-600">Safe Map</a>
+                <a href="legal.html" class="text-gray-600 hover:text-pink-600">Legal Help</a>
+                <a href="shop.html" class="text-gray-600 hover:text-pink-600">Shop</a>
+                <a href="login.html" class="bg-pink-500 text-white px-4 py-2 rounded-md hover:bg-pink-600">Login/Register</a>
+            </div>
+        </nav>
+    </div>
+
+    <div class="container">
+        <header class="gradient-bg">
+            <h1>Legal & Support Resources</h1>
+            <p>Access to helplines, cybercrime reporting portals, and legal advice</p>
+        </header>
+
+        <div class="resources-grid">
+            <div class="resource-card emergency">
+                <div class="card-header">
+                    <h2>Emergency Helplines</h2>
+                </div>
+                <div class="card-content">
+                    <ul class="resource-list">
+                        <li>
+                            <h3>National Emergency Number</h3>
+                            <p>24/7 support for immediate assistance</p>
+                            <a href="tel:112" class="contact-button">Call 112</a>
+                        </li>
+                        <li>
+                            <h3>Women Helpline</h3>
+                            <p>24/7 support for women in distress</p>
+                            <a href="tel:1091" class="contact-button">Call 1091</a>
+                        </li>
+                        <li>
+                            <h3>National Mental Health Helpline</h3>
+                            <p>Support for mental health crisis</p>
+                            <a href="tel:1800-599-0019" class="contact-button">1800-599-0019</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="resource-card cybercrime">
+                <div class="card-header">
+                    <h2>Cybercrime Reporting</h2>
+                </div>
+                <div class="card-content">
+                    <ul class="resource-list">
+                        <li>
+                            <h3>National Cyber Crime Reporting Portal</h3>
+                            <p>Report all types of cybercrimes online</p>
+                            <a href="https://cybercrime.gov.in/" target="_blank" class="resource-button">File a Report</a>
+                        </li>
+                        <li>
+                            <h3>Cyber Crime Helpline</h3>
+                            <p>Report cybercrime via phone</p>
+                            <a href="tel:1930" class="contact-button">Call 1930</a>
+                        </li>
+                        <li>
+                            <h3>Ministry of Home Affairs</h3>
+                            <p>Information about cybersecurity initiatives</p>
+                            <a href="https://www.mha.gov.in/" target="_blank" class="resource-button">Visit Website</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="resource-card legal-advice">
+                <div class="card-header">
+                    <h2>Legal Advice</h2>
+                </div>
+                <div class="card-content">
+                    <ul class="resource-list">
+                        <li>
+                            <h3>National Legal Services Authority (NALSA)</h3>
+                            <p>Free legal aid for eligible individuals</p>
+                            <a href="#" class="resource-button" id="legalAidBtn">Find Local Authority</a>
+                        </li>
+                        <li>
+                            <h3>Bar Council of India</h3>
+                            <p>Lawyer referrals and legal resources</p>
+                            <a href="http://www.barcouncilofindia.org/" target="_blank" class="resource-button">Find a Lawyer</a>
+                        </li>
+                        <li>
+                            <h3>e-Courts Services</h3>
+                            <p>Online case status, judgments, and legal resources</p>
+                            <a href="https://ecourts.gov.in/ecourts_home/" target="_blank" class="resource-button">Access e-Courts</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="locationModal" class="modal">
+        <div class="modal-content">
+            <span class="close-btn">×</span>
+            <h2>Find Services Near You</h2>
+            <div class="search-container">
+                <input type="text" id="zipCodeInput" placeholder="Enter your PIN code">
+                <button id="searchByZip">Search</button>
+            </div>
+            <div id="searchResults">
+                </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const modal = document.getElementById('locationModal');
+            const closeBtn = document.querySelector('.close-btn');
+            const legalAidBtn = document.getElementById('legalAidBtn');
+            const searchByZipBtn = document.getElementById('searchByZip');
+            const zipCodeInput = document.getElementById('zipCodeInput');
+            const searchResults = document.getElementById('searchResults');
+
+            if (legalAidBtn) {
+                legalAidBtn.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    modal.style.display = 'block';
+                    searchResults.innerHTML = '';
+                    document.querySelector('#locationModal .modal-content h2').textContent = 'Find Legal Aid Services Near You'; 
+                });
+            }
+
+            if (closeBtn) {
+                closeBtn.addEventListener('click', function () {
+                    console.log('Close button clicked');
+                    modal.style.display = 'none';
+                });
+            }
+
+            window.addEventListener('click', function (e) {
+                if (e.target === modal) {
+                    modal.style.display = 'none';
+                }
+            });
+
+            if (searchByZipBtn) {
+                searchByZipBtn.addEventListener('click', function () {
+                    console.log('Search button clicked');
+                    const zipCode = zipCodeInput.value.trim();
+                    if (zipCode === '') {
+                        searchResults.innerHTML = '<p class="error-message">Please enter a valid PIN code</p>';
+                        return;
+                    }
+
+                    simulateSearch(zipCode);
+                });
+            }
+
+            if (zipCodeInput) {
+                zipCodeInput.addEventListener('keypress', function (e) {
+                    if (e.key === 'Enter') {
+                        if (searchByZipBtn) {
+                            searchByZipBtn.click();
+                        }
+                    }
+                });
+            }
+
+            function simulateSearch(zipCode) {
+                searchResults.innerHTML = '<p>Searching for resources near ' + zipCode + '...</p>';
+
+                setTimeout(function () {
+                    const isLegalAid = document.querySelector('#locationModal .modal-content h2').textContent.includes('Legal Aid');
+
+                    if (isLegalAid) {
+                        searchResults.innerHTML = `
+                            <h3>Legal Aid Services Near ${zipCode}</h3>
+                            <div class="result-item">
+                                <h4>District Legal Services Authority</h4>
+                                <p>District Court Complex</p>
+                                <p>Phone: 011-2345-6789</p>
+                                <p>Services: Family disputes, property matters, criminal cases</p>
+                                <a href="#" class="resource-button">Contact Details</a>
+                            </div>
+                            <div class="result-item">
+                                <h4>NGO Legal Aid Centre</h4>
+                                <p>45 Civil Lines</p>
+                                <p>Phone: 011-9876-5432</p>
+                                <p>Services: Women's rights, domestic violence, child welfare</p>
+                                <a href="#" class="resource-button">Visit Website</a>
+                            </div>
+                            <div class="result-item">
+                                <h4>State Legal Aid Cell</h4>
+                                <p>High Court Annexe Building</p>
+                                <p>Phone: 011-2468-1357</p>
+                                <p>Services: Consumer disputes, labor issues, public interest litigation</p>
+                                <a href="#" class="resource-button">View Services</a>
+                            </div>
+                        `;
+                    } else {
+                        searchResults.innerHTML = `
+                            <h3>Legal Resources Near ${zipCode}</h3>
+                            <div class="result-item">
+                                <h4>District Court Law Library</h4>
+                                <p>District Court Complex, 1st Floor</p>
+                                <p>Free legal research materials and bare acts</p>
+                                <a href="#" class="resource-button">More Info</a>
+                            </div>
+                            <div class="result-item">
+                                <h4>Lok Adalat Center</h4>
+                                <p>Civil Court Building</p>
+                                <p>Alternative dispute resolution, case settlement</p>
+                                <a href="#" class="resource-button">Next Session Dates</a>
+                            </div>
+                            <div class="result-item">
+                                <h4>Legal Awareness Camp</h4>
+                                <p>Community Hall, Municipal Corporation</p>
+                                <p>Free legal consultations on designated days</p>
+                                <a href="#" class="resource-button">View Schedule</a>
+                            </div>
+                        `;
+                    }
+
+                    if (!document.getElementById('search-results-style')) {
+                        const style = document.createElement('style');
+                        style.id = 'search-results-style';
+                        style.textContent = `
+                                .result-item {
+                                    margin-bottom: 20px;
+                                    padding-bottom: 20px;
+                                    border-bottom: 1px solid #eee;
+                                }
+                                .result-item:last-child {
+                                    border-bottom: none;
+                                    margin-bottom: 0;
+                                    padding-bottom: 0;
+                                    border-bottom: none;
+                                }
+                                .result-item h4 {
+                                    margin: 0 0 8px 0;
+                                    color: #333;
+                                }
+                                .result-item p {
+                                    margin: 0 0 8px 0;
+                                    color: #666;
+                                }
+                                .error-message {
+                                    color: #ff5252;
+                                    font-weight: bold;
+                                }
+                            `;
+                        document.head.appendChild(style);
+                    }
+
+                }, 1500);
+            }
+            console.log('DOM Content Loaded');
+            console.log('Modal element exists:', !!modal);
+            console.log('Close button exists:', !!closeBtn);
+            console.log('Search button exists:', !!searchByZipBtn);
+        });
+    </script>
+</body>
 </html>

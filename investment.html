@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Investment Calculator</title>
+    <title>ELIRA - Investment Calculator</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         body {
@@ -15,7 +15,25 @@
         }
     </style>
 </head>
-<body class="min-h-screen bg-[#f4f7fa] flex flex-col">
+<body class="min-h-screen flex flex-col">
+    <div class="container mx-auto max-w-6xl px-4 py-6">
+        <nav class="flex justify-between items-center py-4 mb-8">
+            <div class="text-2xl font-bold text-gray-800">
+                <a href="index.html" class="text-xl font-bold text-black no-underline">Elira</a>
+            </div>
+            <div class="flex items-center space-x-6">
+                <a href="index.html" class="text-gray-600 hover:text-pink-600">Safety Home</a>
+                <a href="financial_home.html" class="text-gray-600 hover:text-pink-600">Financial Tools</a>
+                <a href="courses.html" class="text-gray-600 hover:text-pink-600">Courses</a>
+                <a href="consult.html" class="text-gray-600 hover:text-pink-600">Consult</a>
+                <a href="safe_routes_map.html" class="text-gray-600 hover:text-pink-600">Safe Map</a>
+                <a href="legal.html" class="text-gray-600 hover:text-pink-600">Legal Help</a>
+                <a href="shop.html" class="text-gray-600 hover:text-pink-600">Shop</a>
+                <a href="login.html" class="bg-pink-500 text-white px-4 py-2 rounded-md hover:bg-pink-600">Login/Register</a>
+            </div>
+        </nav>
+    </div>
+
     <div class="container mx-auto px-4 py-8 flex-grow">
         <div class="max-w-4xl mx-auto">
             <div class="gradient-bg text-white py-6 px-8 rounded-t-xl mb-6">
@@ -94,27 +112,23 @@
     <script>
         document.getElementById('investment-form').addEventListener('submit', function(e) {
             e.preventDefault();
-            
-            // Get form values
+
             const annualSalary = parseFloat(document.getElementById('annual-salary').value);
             const investmentPercentage = parseFloat(document.getElementById('investment-percentage').value);
             const investmentDuration = parseInt(document.getElementById('investment-duration').value);
             const investmentType = document.getElementById('investment-type').value;
-            
-            // Calculate investment details
+
             const investmentDetails = calculateInvestmentProjection(
                 annualSalary, 
                 investmentPercentage, 
                 investmentDuration, 
                 investmentType
             );
-            
-            // Display results
+
             const resultsContainer = document.getElementById('results-container');
             const investmentSummary = document.getElementById('investment-summary');
             const chartContainer = document.getElementById('chart-container');
-            
-            // Populate investment summary
+
             investmentSummary.innerHTML = `
                 <div class="bg-white p-4 rounded-lg shadow-md">
                     <h3 class="text-lg font-bold text-[#ff69b4] mb-2">Monthly Investment</h3>
@@ -133,39 +147,34 @@
                     <p class="text-gray-700">$${investmentDetails.totalReturns.toFixed(2)}</p>
                 </div>
             `;
-            
-            // Create a simple text-based year-by-year breakdown
+
             chartContainer.innerHTML = `
                 <h3 class="text-xl font-bold mb-4 text-gray-800">Year-by-Year Investment Growth</h3>
                 <div class="bg-white p-4 rounded-lg shadow-md">
                     <pre class="text-sm text-gray-700 overflow-x-auto">${generateYearlyBreakdown(investmentDetails)}</pre>
                 </div>
             `;
-            
-            // Show results
+
             resultsContainer.classList.remove('hidden');
         });
 
         function calculateInvestmentProjection(annualSalary, investmentPercentage, duration, riskType) {
-            // Determine return rates based on risk type
             const returnRates = {
                 'low': 0.04,
                 'medium': 0.07,
                 'high': 0.10
             };
-            
-            // Calculate monthly investment
+
             const monthlyInvestment = (annualSalary * (investmentPercentage / 100)) / 12;
             const totalInvestment = monthlyInvestment * (duration * 12);
-            
-            // Calculate compound interest
+
             const annualReturnRate = returnRates[riskType];
             const projectedValue = calculateCompoundInterest(
                 monthlyInvestment, 
                 annualReturnRate, 
                 duration
             );
-            
+
             return {
                 monthlyInvestment,
                 totalInvestment,
@@ -178,38 +187,34 @@
         function calculateCompoundInterest(monthlyContribution, annualRate, years) {
             let totalValue = 0;
             let currentValue = 0;
-            
+
             for (let year = 1; year <= years; year++) {
-                // Calculate annual contribution
                 const annualContribution = monthlyContribution * 12;
-                
-                // Grow previous balance
+
                 currentValue = (currentValue + annualContribution) * (1 + annualRate);
-                
+
                 totalValue = currentValue;
             }
-            
+
             return totalValue;
         }
 
         function generateYearlyBreakdown(investmentDetails) {
             let breakdown = "Year | Contribution | Balance | Growth\n";
             breakdown += "-----+---------------+---------+--------\n";
-            
+
             let currentValue = 0;
             const monthlyInvestment = investmentDetails.monthlyInvestment;
             const annualRate = investmentDetails.annualReturnRate / 100;
-            
-            for (let year = 1; year <= 10; year++) {
-                // Calculate annual contribution
+
+            const displayYears = Math.min(investmentDetails.duration, 10); 
+
+            for (let year = 1; year <= displayYears; year++) {
                 const annualContribution = monthlyInvestment * 12;
-                
-                // Grow previous balance
                 currentValue = (currentValue + annualContribution) * (1 + annualRate);
-                
                 breakdown += `${year.toString().padStart(4)} | $${(annualContribution).toFixed(2).padStart(12)} | $${currentValue.toFixed(2).padStart(8)} | ${(annualRate * 100).toFixed(2)}%\n`;
             }
-            
+
             return breakdown;
         }
     </script>

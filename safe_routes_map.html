@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mohali Crime Heatmap & Safe Routes</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css">
+    <script src="https://cdn.jsdelivr.net/npm/emailjs-com@2/dist/email.min.js"></script> <style>
+        body, html { margin: 0; padding: 0; height: 100%; font-family: Arial, sans-serif; }
+        #map { height: 100vh; width: 75%; float: right; } 
+        #sidebar { 
+            width: 25%; height: calc(100vh - 60px); 
+            background: #222; color: white; padding: 15px; position: absolute; left: 0; 
+            top: 60px; 
+            overflow-y: auto;
+        }
+        #find-route-btn { background-color: green; color: white; padding: 10px; border: none; cursor: pointer; border-radius: 5px; width: 100%; }
+        select, table { width: 100%; margin: 10px 0; padding: 5px; background: #444; color: white; border: none; }
+        table { border-collapse: collapse; }
+        th, td { border: 1px solid white; padding: 5px; text-align: left; }
+
+        .main-nav { 
+            width: 100%; 
+            background-color: #f4f7fa; 
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 1000;
+        }
+        .main-nav .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1rem;
+        }
+        .main-nav a {
+            font-size: 1rem;
+            padding: 0.5rem 0.75rem;
+            text-decoration: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="main-nav">
+        <nav class="flex justify-between items-center py-4">
+            <div class="text-2xl font-bold text-gray-800">
+                <a href="index.html" class="text-xl font-bold text-black no-underline">Elira</a>
+            </div>
+            <div class="flex items-center space-x-6">
+                <a href="index.html" class="text-gray-600 hover:text-pink-600">Safety Home</a>
+                <a href="financial_home.html" class="text-gray-600 hover:text-pink-600">Financial Tools</a>
+                <a href="courses.html" class="text-gray-600 hover:text-pink-600">Courses</a>
+                <a href="consult.html" class="text-gray-600 hover:text-pink-600">Consult</a>
+                <a href="safe_routes_map.html" class="text-gray-600 hover:text-pink-600">Safe Map</a>
+                <a href="legal.html" class="text-gray-600 hover:text-pink-600">Legal Help</a>
+                <a href="shop.html" class="text-gray-600 hover:text-pink-600">Shop</a>
+                <a href="login.html" class="bg-pink-500 text-white px-4 py-2 rounded-md hover:bg-pink-600">Login/Register</a>
+            </div>
+        </nav>
+    </div>
+
+    <div id="sidebar">
+        <h3>Crime Data & Safe Route Finder</h3>
+        <label>Start Location:</label>
+        <select id="start-location">
+            <option value="30.7409,76.7821">Sector 17, Chandigarh</option>
+        </select>
+        <label>End Location:</label>
+        <select id="end-location">
+            <option value="30.7212,76.7411">Sector 41, Chandigarh</option>
+        </select>
+        <button id="find-route-btn">Find Safe Route</button>
+        <h4>Recent Crimes</h4>
+        <table>
+            <tr><th>Type</th><th>Location</th><th>Time</th></tr>
+            <tbody id="crime-table">
+                <tr><td>Snatching</td><td>Sector 19, Chandigarh</td><td>9:45 PM</td></tr>
+                <tr><td>Molestation</td><td>Sector 58, Mohali</td><td>7:30 PM</td></tr>
+                <tr><td>Acid throwing</td><td>Sector 38 West, Chandigarh</td><td>5:50 PM</td></tr>
+                <tr><td>Murder</td><td>Sector 47, Chandigarh</td><td>2:10 AM</td></tr>
+                <tr><td>Physical Violence</td><td>Sector 9, Chandigarh</td><td>11:15 PM</td></tr>
+            </tbody>
+        </table>
+    </div>
+    <div id="map"></div>
+
+    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+    <script>
+        let map = L.map('map').setView([30.7046, 76.7179], 13);
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(map);
+
+        const crimeData = [
+            {"lat": 30.6900, "lon": 76.6900, "type": "Snatching", "location": "Sector 69, Mohali", "time": "9:45 PM"},
+            {"lat": 30.7100, "lon": 76.7500, "type": "Molestation", "location": "Phase 3B2, Mohali", "time": "7:30 PM"},
+            {"lat": 30.7250, "lon": 76.7700, "type": "Acid throwing", "location": "Sector 88, Mohali", "time": "5:50 PM"},
+            {"lat": 30.7400, "lon": 76.6800, "type": "Murder", "location": "Kharar, Mohali", "time": "2:10 AM"},
+            {"lat": 30.7500, "lon": 76.6600, "type": "Physical Violence", "location": "Landran, Mohali", "time": "11:15 PM"},
+        ];
+        const crimeTableBody = document.getElementById('crime-table');
+        crimeTableBody.innerHTML = ''; 
+        crimeData.forEach(crime => {
+            const row = document.createElement('tr');
+            row.innerHTML = `<td>${crime.type}</td><td>${crime.location}</td><td>${crime.time}</td>`;
+            crimeTableBody.appendChild(row);
+
+            L.circle([crime.lat, crime.lon], {
+                color: "red",
+                fillColor: "#f03",
+                fillOpacity: 0.5,
+                radius: 300
+            }).addTo(map).bindPopup(`<b>${crime.type}</b><br>Location: ${crime.location}<br>Time: ${crime.time}`);
+        });
+
+
+        document.getElementById("find-route-btn").addEventListener("click", () => {
+            let start = { lat: 30.7409, lon: 76.7821 }; 
+            let end = { lat: 30.7212, lon: 76.7411 };   
+
+            fetch("YOUR_FLASK_BACKEND_URL/find-safe-route", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ start, end })
+            })
+            .then(res => {
+                if (!res.ok) {
+                    throw new Error(`HTTP error! status: ${res.status}`);
+                }
+                return res.json();
+            })
+            .then(data => {
+                if (data.routes && data.routes.length > 0) {
+                    let routeCoords = data.routes[0].geometry.coordinates.map(coord => [coord[1], coord[0]]);
+                    let safeRoute = L.polyline(routeCoords, { color: "green", weight: 5 }).addTo(map);
+                    map.fitBounds(safeRoute.getBounds());
+                } else {
+                    alert("Error: No route found or failed to fetch safe route. Check backend logs.");
+                    console.error("Backend response:", data);
+                }
+            })
+            .catch(error => {
+                console.error("Error fetching safe route:", error);
+                alert("Failed to connect to route finder service. Ensure backend is running and URL is correct.");
+            });
+        });
+    </script>
+</body>
+</html>

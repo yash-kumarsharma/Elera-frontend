@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ELIRA - Emergency Location Alert</title>
+    <script src="https://cdn.jsdelivr.net/npm/emailjs-com@2/dist/email.min.js"></script>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+    <script src="https://cdn.tailwindcss.com"></script> <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            font-family: 'Arial', sans-serif;
+            overflow: hidden;
+        }
+        #map {
+            height: calc(100% - 60px); 
+            width: 100%;
+            margin-top: 60px; 
+        }
+        #permission-btn {
+            position: absolute;
+            top: 80px; 
+            left: 60px;
+            background-color: #28a745;
+            color: white;
+            padding: 10px 20px;
+            font-size: 16px;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+            z-index: 1000;
+        }
+        #permission-btn:hover {
+            background-color: #218838;
+        }
+        #top-coordinates {
+            position: absolute;
+            top: 70px; 
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: rgba(255, 255, 255, 0.9);
+            color: #333;
+            padding: 10px 20px;
+            border-radius: 5px;
+            font-size: 18px;
+            font-weight: bold;
+            z-index: 999;
+            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        .main-nav { 
+            width: 100%; 
+            background-color: #f4f7fa; 
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 1001;
+        }
+        .main-nav .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1rem;
+        }
+        .main-nav a {
+            font-size: 1rem;
+            padding: 0.5rem 0.75rem;
+            text-decoration: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="main-nav">
+        <nav class="flex justify-between items-center py-4">
+            <div class="text-2xl font-bold text-gray-800">
+                <a href="index.html" class="text-xl font-bold text-black no-underline">Elira</a>
+            </div>
+            <div class="flex items-center space-x-6">
+                <a href="index.html" class="text-gray-600 hover:text-pink-600">Safety Home</a>
+                <a href="financial_home.html" class="text-gray-600 hover:text-pink-600">Financial Tools</a>
+                <a href="courses.html" class="text-gray-600 hover:text-pink-600">Courses</a>
+                <a href="consult.html" class="text-gray-600 hover:text-pink-600">Consult</a>
+                <a href="safe_routes_map.html" class="text-gray-600 hover:text-pink-600">Safe Map</a>
+                <a href="legal.html" class="text-gray-600 hover:text-pink-600">Legal Help</a>
+                <a href="shop.html" class="text-gray-600 hover:text-pink-600">Shop</a>
+                <a href="login.html" class="bg-pink-500 text-white px-4 py-2 rounded-md hover:bg-pink-600">Login/Register</a>
+            </div>
+        </nav>
+    </div>
+
+    <button id="permission-btn" onclick="requestLocation()">Allow Location Access</button>
+    <div id="top-coordinates">Latitude: - | Longitude: -</div>
+    <div id="map"></div>
+
+    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+    <script>
+        let map, marker, lat, lon, address;
+
+        function initMap(latitude = 0, longitude = 0) {
+            if (!map) { 
+                map = L.map('map').setView([latitude, longitude], 13);
+                L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(map);
+                marker = L.marker([latitude, longitude]).addTo(map);
+            } else {
+                map.setView([latitude, longitude], 13);
+                marker.setLatLng([latitude, longitude]);
+            }
+        }
+
+        async function requestLocation() {
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(
+                    async function (position) {
+                        document.getElementById("permission-btn").style.display = "none"; 
+                        lat = position.coords.latitude;
+                        lon = position.coords.longitude;
+
+                        let response = await fetch(`https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lon}`);
+                        let data = await response.json();
+                        address = data.display_name || "Address not found";
+
+                        map.setView([lat, lon], 13);
+                        marker.setLatLng([lat, lon]).bindPopup(`📍 You are here: <br> ${address}`).openPopup();
+                        document.getElementById("top-coordinates").innerHTML = `Latitude: ${lat.toFixed(6)} | Longitude: ${lon.toFixed(6)}`;
+
+                        sendEmergencyAlerts();
+                    }, 
+                    function (error) {
+                        alert("❌ Location access denied or error occurred. Please allow location access to continue.");
+                        console.error("Geolocation error:", error);
+                    }
+                );
+            } else {
+                alert("Geolocation is not supported by your browser. Cannot provide emergency support.");
+            }
+        }
+
+        function sendEmergencyAlerts() {
+            if (!lat || !lon) {
+                alert("❌ Location not available. Cannot send emergency alerts.");
+                return;
+            }
+
+            let locationMessage = `🚨 Emergency Alert!\n📍 Location: ${address}\n🔗 Google Maps: https://www.google.com/maps/search/?api=1&query=${lat},${lon}`;
+
+            emailjs.init("YOUR_EMAILJS_USER_ID"); 
+            emailjs.send("YOUR_EMAILJS_SERVICE_ID", "YOUR_EMAILJS_TEMPLATE_ID", { 
+                to_email: "emergency_contact@example.com", 
+                message: locationMessage
+            }).then(function () {
+                console.log("✅ Email alert sent successfully!");
+            }, function (error) {
+                console.error("❌ Failed to send email alert:", error);
+                alert("Failed to send email alert. Check console for details.");
+            });
+
+            let whatsappURL = `https://api.whatsapp.com/send?phone=+911234567890&text=${encodeURIComponent(locationMessage)}`; 
+            window.open(whatsappURL, "_blank"); 
+            alert("Emergency alerts sent to contacts and WhatsApp. Stay safe!");
+        }
+
+        window.onload = function () {
+            initMap(30.7046, 76.7179); 
+        };
+    </script>
+</body>
+</html>
